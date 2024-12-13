@@ -1,0 +1,22 @@
+{
+  "presets": [
+    "@babel/preset-typescript",
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "targets": "> 0.25%, not dead",
+        "corejs": "3"
+      }
+    ]
+  ],
+  "plugins": [
+    "@vue/babel-plugin-jsx",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "useESModules": true
+      }
+    ]
+  ]
+}

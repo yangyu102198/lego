@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": false,
+    "paths": {
+      "@type/*": [
+        "./types/*"
+      ],
+      "@utils/*": [
+        "./lib/utils/*"
+      ],
+    }
+  },
+  "include": [
+    "lib/**/*.tsx",
+    "lib/**/*.ts",
+    "types/**/*.*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
+}

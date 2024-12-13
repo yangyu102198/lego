@@ -1,0 +1,31 @@
+.edit-main {
+    height: calc(100vh - 40px);
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+    .header {
+        height: 48px;
+        background: #fff;
+    }
+    .body {
+        flex-grow: 1;
+        margin-top: 2px;
+        display: flex;
+        .body__center {
+            flex-grow: 1;
+            padding: 15px;
+        }
+        .body-center__container {
+            background: #fff;
+            height: 100%;
+            box-shadow: 0 1px 4px 0 rgba(31, 56, 88, 0.06);
+        }
+        .body__right {
+            width: 300px;
+            background: #fff;
+        }
+        .body__left {
+            background: #fff;
+        }
+    }
+}

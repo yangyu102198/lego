@@ -1,0 +1,63 @@
+{
+    "name": "@lego/vue-component",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "rollup -c --environment BUILD:development --watch",
+        "build": "cross-env NODE_ENV=development gulp -f ./gulpfile.mjs compile",
+        "build:watch": "cross-env NODE_ENV=development gulp -f ./gulpfile.mjs watchCompile",
+        "preview": "vite preview",
+        "lint": "eslint \"./test.ts\""
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./*": {
+            "types": "./dist/*/index.d.ts",
+            "import": "./dist/*/index.js",
+            "default": "./dist/*/index.js"
+        },
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js"
+        },
+        "./theme/*": {
+            "import": "./dist/theme/*",
+            "default": "./dist/theme/*"
+        }
+    },
+    "dependencies": {
+        "@iconify/iconify": "^3.1.1",
+        "@lego/core": "workspace:*",
+        "element-plus": "^2.8.7",
+        "vue": "^3.5.3"
+    },
+    "devDependencies": {
+        "@amatlash/vite-plugin-stylelint": "^1.2.0",
+        "@eslint/js": "^9.11.1",
+        "cross-env": "^7.0.3",
+        "eslint": "^9.11.1",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "eslint-plugin-vue": "^9.28.0",
+        "glob": "11.0.0",
+        "globals": "^15.9.0",
+        "prettier": "^3.3.3",
+        "stylelint": "^16.9.0",
+        "stylelint-config-html": "^1.1.0",
+        "stylelint-config-prettier-scss": "^1.0.0",
+        "stylelint-config-recess-order": "^5.1.1",
+        "stylelint-config-recommended-scss": "^14.1.0",
+        "stylelint-config-recommended-vue": "^1.5.0",
+        "stylelint-config-standard": "^36.0.1",
+        "stylelint-config-standard-scss": "^13.1.0",
+        "stylelint-prettier": "^5.0.2",
+        "typescript": "5.4.2",
+        "typescript-eslint": "^8.7.0",
+        "vue-tsc": "^2.0.29"
+    }
+}

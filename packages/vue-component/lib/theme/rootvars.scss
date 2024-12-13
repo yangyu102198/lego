@@ -1,0 +1,5 @@
+@use './function.scss' as *;
+
+:root {
+    @include set-css-var-value('color-eee', #eee);
+}

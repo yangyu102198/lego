@@ -1,0 +1,28 @@
+@use './config.scss' as config;
+@use './function.scss' as function;
+@use './rootvars.scss';
+
+.#{config.$namespace}-nav-wrap {
+    height: 100%;
+    display: flex;
+    .nav-wrap__container {
+        width: 48px;
+        height: 100%;
+        overflow: hidden;
+        border-right: 1px solid function.getCssVar('color-eee');
+        .icons {
+            display: flex;
+            padding: 10px 0;
+            flex-direction: column;
+            align-items: center;
+        }
+        .icons__item {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    }
+    .icons-item__component--actived {
+        min-width: 301px;
+        box-shadow: 4px 6px 6px 0 rgba(31, 50, 88, 0.08);
+    }
+}
