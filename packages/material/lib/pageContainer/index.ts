@@ -7,6 +7,7 @@ const pageContainerMeterial: ComponentMeterialMeta<ComponentLayoutName.Page> = {
     name: 'pageContainer',
     componentName: 'pageContainer',
     componentLayoutType: ComponentLayoutName.Page,
+    componentIcon: 'material-symbols-light:two-pager-rounded',
     componentEditConfig: {
         showInNav: false,
         drag: false

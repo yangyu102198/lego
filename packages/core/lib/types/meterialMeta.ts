@@ -65,6 +65,7 @@ export interface ComponentMeterialMeta<
         LayoutName
     >];
     componentName: string;
+    componentIcon?: string;
     componentLayoutType?: LayoutName;
 }
 

@@ -5,11 +5,12 @@ import TipsContainer from './tips/tipsContainer.vue';
 class TipsContainerMountController {
     private tipsApp!: App | null;
     constructor(private engin: Engin) {}
-    mount(component, containerNode) {
+    mount(component, containerNode, activedNodeController) {
         if (component.$el) {
             this.tipsApp = createApp(TipsContainer, {
                 containerNode: containerNode,
-                engin: this.engin
+                engin: this.engin,
+                activedNodeController
             });
             const wrap = document.createElement('div');
             (component.$el as HTMLElement).appendChild(wrap);
@@ -25,13 +26,17 @@ class TipsContainerMountController {
 }
 
 const TipsContainerController = {
-    addContainer(node: TreeNode, engin: Engin) {
+    addContainer(node: TreeNode, engin: Engin, activedNodeController) {
         const tipsContainerMountController = new TipsContainerMountController(
             engin
         );
         node.event.on('setComponent', (component: ComponentPublicInstance) => {
             if (component.$el) {
-                tipsContainerMountController.mount(component, node);
+                tipsContainerMountController.mount(
+                    component,
+                    node,
+                    activedNodeController
+                );
             }
         });
         // 节点销毁时，销毁tipsContainer

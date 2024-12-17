@@ -113,4 +113,10 @@ export default class TreeNodeManage {
         this.selectedNode = selectedNode;
         this.driver.selectedNode.call(selectedNode);
     }
+    copyNodeAndChild(node: TreeNode) {
+        const copyNode = this.treeNodeFactory.copyNodeAndChild(node, node => {
+            this.driver.treeNodeCreate.call(node);
+        });
+        return copyNode;
+    }
 }

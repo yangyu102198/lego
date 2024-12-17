@@ -1,7 +1,13 @@
 <template>
-    <div class="tips-wrap">
+    <div class="tips-wrap" @click="stopPropagation">
         <component
-            :is="item.render(props.engin, props.treeNode)"
+            :is="
+                item.render(
+                    props.engin,
+                    props.treeNode,
+                    props.activedNodeController
+                )
+            "
             v-bind:key="`${item.tipsName}-${index}`"
             class="tip-item"
             v-for="(item, index) in getTips()"
@@ -11,9 +17,11 @@
 <script lang="ts" setup>
 import tipsManager from './index';
 import { Engin, TreeNode } from '@lego/core';
+import { ActivedNodeController } from '../ActivedNodeController';
 const props = defineProps<{
     engin: Engin;
     treeNode: TreeNode;
+    activedNodeController: ActivedNodeController;
 }>();
 const getTips = () => {
     const treeNodeName =
@@ -35,16 +43,26 @@ const getTips = () => {
         return show;
     });
 };
+const stopPropagation = event => {
+    event.stopPropagation();
+};
 </script>
 <style lang="scss" scoped>
 .tips-wrap {
     position: absolute;
-    top: -22px;
+    top: -24px;
     left: 0px;
     display: flex;
-    height: 20px;
+    height: 22px;
+    padding: 2px 5px;
+    background-color: #006cff;
+    border-radius: 2px;
 }
 .tip-item {
     pointer-events: all;
+    margin-right: 4px;
+}
+.tip-item:nth-last-child(1) {
+    margin-right: 0px;
 }
 </style>

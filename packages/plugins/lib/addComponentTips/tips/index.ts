@@ -1,5 +1,7 @@
 import BaseTips from './innerTips/BaseTIps';
 import { DeleteTips } from './innerTips/DeleteTips';
+import { IdentifierTips } from './innerTips/IdentifierTips';
+import { CopyTips } from './innerTips/CopyTips';
 
 interface TipsManager {
     tips: BaseTips[];
@@ -7,7 +9,7 @@ interface TipsManager {
 }
 
 const tipsManager: TipsManager = {
-    tips: [DeleteTips],
+    tips: [IdentifierTips, CopyTips, DeleteTips],
     addTips(tip) {
         this.tips.push(tip);
     }

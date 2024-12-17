@@ -14,15 +14,14 @@ const props = defineProps<{
     treeNode: TreeNode;
     engin: Engin;
 }>();
-const deleteNode = event => {
-    event.stopPropagation();
+const deleteNode = _ => {
     props.treeNode.removeSelf();
 };
 </script>
 <style scoped lang="scss">
 .delete-tip {
     width: 20px;
-    background-color: #006cff;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;

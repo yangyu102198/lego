@@ -32,7 +32,11 @@ export const addComponentTips = (
                     node.configApplier.getDefaultConfig('componentName') ==
                     'pageContainer'
                 ) {
-                    TipsContainerController.addContainer(node, engin);
+                    TipsContainerController.addContainer(
+                        node,
+                        engin,
+                        activedNodeController
+                    );
                 }
             });
             engin.hooks.meterialRegisterFinish.tap({

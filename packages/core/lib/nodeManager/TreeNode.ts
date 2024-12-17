@@ -1,6 +1,6 @@
-import emitter from '../utils/emitter';
+import emitter from '@utils/emitter';
+import { copy } from '@utils/util';
 import { type TreeNodeMetaBase } from '@type/meterialMeta';
-// import { type ModificationFunName } from './ModificationRules';
 import { type FnType } from '@type/utils';
 import { type TreeNodeEvent, Postion } from '@type/treeNode';
 import RuleApplier, { RuleApplierInterface } from './RuleApplier';
@@ -129,6 +129,9 @@ class TreeNode<NodeMetaData extends TreeNodeMetaBase = TreeNodeMetaBase> {
     }
     destroyed() {
         this.event.emit('destoryed');
+    }
+    copyConfig() {
+        return copy(this.configApplier.getCurrentConfig());
     }
 }
 

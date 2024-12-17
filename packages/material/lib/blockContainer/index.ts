@@ -9,6 +9,7 @@ const blockContainerMeterial: ComponentMeterialMeta<ComponentLayoutName.Block> =
         alias: '块容器',
         name: 'blockContainer',
         componentName: 'blockContainer',
+        componentIcon: 'material-symbols-light:content-copy-outline-sharp',
         componentLayoutType: ComponentLayoutName.Block,
         getMetrial() {
             return blockContainerComponent;

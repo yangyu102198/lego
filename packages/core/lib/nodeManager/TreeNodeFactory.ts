@@ -56,6 +56,29 @@ class TreeNodeFactory {
         const treeNode = new TreeNode(configApplier, parentNode);
         return treeNode;
     }
+    // copy树节点以及子节点
+    copyNodeAndChild(node: TreeNode, hander: FnType = () => {}) {
+        const iteratorCreateTreeNode = (
+            node: TreeNode,
+            parentNode?: TreeNode
+        ) => {
+            // 复制当前节点的配置
+            const nodeConfig = node.copyConfig();
+            // 删除原始节点的id
+            nodeConfig.id = null;
+
+            const copyNode = this.createTeeNode(nodeConfig, parentNode);
+
+            hander(node);
+            const childrens = copyNode.childNodes.map(childNode => {
+                return iteratorCreateTreeNode(childNode, copyNode);
+            });
+
+            copyNode.childNodes = childrens || [];
+            return copyNode;
+        };
+        return iteratorCreateTreeNode(node);
+    }
 }
 
 export default TreeNodeFactory;
