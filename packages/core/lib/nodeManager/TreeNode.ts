@@ -43,6 +43,7 @@ class TreeNode<NodeMetaData extends TreeNodeMetaBase = TreeNodeMetaBase> {
         node.parentNode = this;
     }
     // 移除当前节点
+    // 当移除节点的时候异步调用destroyed事件
     removeSelf() {
         if (this.childNodes.length) {
             this.childNodes.forEach(node => {
@@ -52,7 +53,7 @@ class TreeNode<NodeMetaData extends TreeNodeMetaBase = TreeNodeMetaBase> {
         if (this.parentNode) {
             this.parentNode.delChildNode(this);
         }
-        this.destroyed();
+        Promise.resolve().then(() => this.destroyed());
     }
     removeChildNode(child: TreeNode) {
         const childIndex = this.childNodes.indexOf(child);
@@ -96,6 +97,19 @@ class TreeNode<NodeMetaData extends TreeNodeMetaBase = TreeNodeMetaBase> {
             });
         };
         iteratorNode([this]);
+    }
+    // 从当前节点反向遍历父节点
+    traveseParent(callback: FnType<TreeNode[], boolean | void>) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        let currentNode: TreeNode | undefined = this;
+        while (currentNode) {
+            // 当反向遍历回调返回true时停止
+            if (callback(currentNode)) {
+                return;
+            } else {
+                currentNode = currentNode!.parentNode;
+            }
+        }
     }
     // 设置修改器
     attachModifier<T extends NodeMetaData>(applier: RuleApplierInterface<T>) {

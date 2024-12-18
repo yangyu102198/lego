@@ -1,15 +1,16 @@
-import BaseTips from './innerTips/BaseTIps';
-import { DeleteTips } from './innerTips/DeleteTips';
-import { IdentifierTips } from './innerTips/IdentifierTips';
-import { CopyTips } from './innerTips/CopyTips';
+import BaseTip from './innerTips/BaseTip';
+import { DeleteTip } from './innerTips/DeleteTip';
+import { IdentifierTip } from './innerTips/IdentifierTip';
+import { CopyTip } from './innerTips/CopyTip';
+import { LockTip } from './innerTips/LockTip';
 
 interface TipsManager {
-    tips: BaseTips[];
-    addTips(tip: BaseTips): void;
+    tips: BaseTip[];
+    addTips(tip: BaseTip): void;
 }
 
 const tipsManager: TipsManager = {
-    tips: [IdentifierTips, CopyTips, DeleteTips],
+    tips: [IdentifierTip, CopyTip, LockTip, DeleteTip],
     addTips(tip) {
         this.tips.push(tip);
     }

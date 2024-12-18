@@ -8,7 +8,7 @@
                     props.activedNodeController
                 )
             "
-            v-bind:key="`${item.tipsName}-${index}`"
+            v-bind:key="`${item.tipName}-${index}`"
             class="tip-item"
             v-for="(item, index) in getTips()"
         ></component>
@@ -62,7 +62,7 @@ const stopPropagation = event => {
     pointer-events: all;
     margin-right: 4px;
 }
-.tip-item:nth-last-child(1) {
+.tip-item:last-child {
     margin-right: 0px;
 }
 </style>

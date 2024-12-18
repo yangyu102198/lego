@@ -2,8 +2,8 @@ import Layout from './Layout';
 
 // 组件级容器
 export default class InnerLayout extends Layout {
-    constructor(id) {
-        super(id);
+    constructor(node) {
+        super(node);
     }
     accept() {
         return false;

@@ -65,17 +65,15 @@ type NodeMessage = {
 };
 const getChainNodeMessage = (): NodeMessage[] => {
     const nodeChain: NodeMessage[] = [];
-    let current: TreeNode | undefined = props.treeNode;
-
-    while (current) {
+    // 获取当前节点和祖先节点的信息
+    props.treeNode.traveseParent(node => {
         nodeChain.push({
-            node: current,
-            componentIcon:
-                current.configApplier.getDefaultConfig('componentIcon'),
-            alias: current.configApplier.getDefaultConfig('alias')
+            node,
+            componentIcon: node.configApplier.getDefaultConfig('componentIcon'),
+            alias: node.configApplier.getDefaultConfig('alias')
         });
-        current = current.parentNode;
-    }
+    });
+
     return nodeChain;
 };
 const selectedNode = (item: NodeMessage) => {
@@ -103,14 +101,17 @@ const parentNodeMessage = computed(() => {
         align-items: center;
         color: #fff;
         font-size: 12px;
+        border-right: 1px solid #1163d1;
+        padding-right: 5px;
     }
 }
 .identifier-tip__dropdown {
+    border: none !important;
     .el-dropdown-menu {
         background-color: #494848;
     }
-    .el-popper__arrow {
-        display: none;
+    .el-popper__arrow::before {
+        background-color: #494848 !important;
     }
     .identifier-tip__content {
         color: #fff;
@@ -125,5 +126,9 @@ const parentNodeMessage = computed(() => {
             color: #fff;
         }
     }
+}
+.tip-item:last-child .identifier-tip__info {
+    border-right: none;
+    padding-right: 0;
 }
 </style>

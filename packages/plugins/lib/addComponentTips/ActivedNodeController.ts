@@ -1,5 +1,6 @@
 import { TreeNode, FnType, Engin } from '@lego/core';
 import { HoverNodeMessage } from './types';
+import { getNodeLocked } from '../utils';
 
 // hover和选中节点的处理器
 export class ActivedNodeController {
@@ -11,12 +12,12 @@ export class ActivedNodeController {
     handlerHoverNode(node?: TreeNode) {
         let hoverNode: HoverNodeMessage | null = null;
         if (node) {
-            const lockedMessage = this.checkAncestorNodeIsLocked(node);
-            if (lockedMessage) {
+            const { result, lockedNode } = getNodeLocked(node);
+            if (result) {
                 hoverNode = {
                     hoverNode: node,
                     locked: true,
-                    lockedNode: lockedMessage.lockedNode
+                    lockedNode
                 };
             } else {
                 hoverNode = {
@@ -27,10 +28,10 @@ export class ActivedNodeController {
         this.handler('treeNode-hover', hoverNode);
     }
     handlerSelectedNodes(node: TreeNode, isClear = true) {
-        const lockedMessage = this.checkAncestorNodeIsLocked(node);
+        const { result, lockedNode } = getNodeLocked(node);
         const currentSelectedNode = this.getSelectedNodes();
-        if (lockedMessage) {
-            node = lockedMessage.lockedNode;
+        if (result) {
+            node = lockedNode!;
         }
         if (isClear) {
             currentSelectedNode.length = 0;
@@ -57,23 +58,6 @@ export class ActivedNodeController {
 
     private handlerSelectedChanged(currentSelectedNode: TreeNode[]) {
         this.handler('treeNode-actived', currentSelectedNode);
-    }
-
-    private checkAncestorNodeIsLocked(node: TreeNode) {
-        while (node.parentNode) {
-            const parentNode = node.parentNode;
-            if (
-                parentNode.configApplier.getCurrentConfig(
-                    'componentEditConfig.locked'
-                )
-            ) {
-                return {
-                    lockedNode: parentNode
-                };
-            }
-            node = parentNode;
-        }
-        return false;
     }
 }
 

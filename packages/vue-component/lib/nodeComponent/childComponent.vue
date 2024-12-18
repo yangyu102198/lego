@@ -4,7 +4,6 @@
         :key="child.id"
         :treeNode="child"
         :engin="props.engin"
-        :t="child.id"
     ></nodeComponent>
 </template>
 <script setup lang="ts">

@@ -1,18 +1,17 @@
 <template>
-    <div class="delete-tip" @click="event => deleteNode(event)">
-        <icon
-            icon="material-symbols-light:delete-outline-rounded"
-            color="#fff"
-            :size="20"
-        ></icon>
+    <div class="delete-tip" @click="event => deleteNode(event)" title="删除">
+        <icon :icon="props.tip.tipIcon" color="#fff" :size="20"></icon>
     </div>
 </template>
 <script lang="ts" setup>
 import { icon } from '@lego/vue-component';
 import { TreeNode, Engin } from '@lego/core';
+import BaseTip from './BaseTip';
+
 const props = defineProps<{
     treeNode: TreeNode;
     engin: Engin;
+    tip: BaseTip;
 }>();
 const deleteNode = _ => {
     props.treeNode.removeSelf();

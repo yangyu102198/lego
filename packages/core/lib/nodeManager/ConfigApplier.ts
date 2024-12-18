@@ -38,7 +38,7 @@ export default class ConfigApplier<T = Record<string, any>> {
         for (let i = 0; i < list.length - 1; i++) {
             const property = list[i];
             if (!config[property] || typeof config[property] !== 'object') {
-                const propertySetWay = this.propertySetWayMap.get(property[i]);
+                const propertySetWay = this.propertySetWayMap.get(property);
                 if (!propertySetWay) {
                     throw new Error(`cant set Field ${propertyPath}`);
                 } else {

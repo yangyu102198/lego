@@ -5,11 +5,11 @@ import {
     type SourcePosition,
     type Message
 } from './type';
-
+import { TreeNode } from '@lego/core';
 // 区域容器基类
 // 计算和控制每种区域容器可以加入的容器
 export default abstract class Layout {
-    constructor(public id) {}
+    constructor(public node: TreeNode) {}
     protected calcClosestAnchorIndex(
         anchors: AnchorInfo[],
         source: SourcePosition

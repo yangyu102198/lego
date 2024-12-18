@@ -1,11 +1,12 @@
 import { DefineComponent } from 'vue';
 import { TreeNode, ComponentLayoutName } from '@lego/core';
-import { bindDomEvent, removeDomEvent } from '../utils';
+import { bindDomEvent, removeDomEvent, getNodeLocked } from '../utils';
 
 type ComponentCtr = DefineComponent<{ treeNode: TreeNode }>;
 
 const canDrag = treeNode => {
-    // 先查看当前配置,在查看默认配置
+    // 1. 查看节点是否被锁定
+    // 2. 先查看当前配置,在查看默认配置
     // 如组件的内部的块容器会修改当前配置drag=false
     const currentConfigCanDrag = treeNode.configApplier.getCurrentConfig(
         'componentEditConfig.drag'
@@ -43,7 +44,14 @@ export default meterial => {
             mounted() {
                 const treeNode = this.$props.treeNode;
                 if (canDrag(treeNode) && this.$el) {
-                    this.$el.draggable = true;
+                    this.$watch(
+                        () => {
+                            return getNodeLocked(treeNode).result;
+                        },
+                        newValue => {
+                            this.$el.draggable = !newValue;
+                        }
+                    );
                     bindDomEvent(
                         this.$el,
                         'dragstart',

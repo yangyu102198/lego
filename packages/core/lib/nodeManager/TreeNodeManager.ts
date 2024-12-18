@@ -8,7 +8,7 @@ import { HooksInstanceDriver } from '@type/hookInstance';
 import Meterial from '../meterial';
 
 const cache = new ExpiredCache();
-
+(window as any).__cache = cache;
 export default class TreeNodeManage {
     public rootNodeActived!: TreeNode | null;
     public treeNodeContainer: TreeNode[] = [];

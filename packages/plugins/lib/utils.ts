@@ -1,4 +1,4 @@
-import { FnType } from '@lego/core';
+import { FnType, TreeNode } from '@lego/core';
 
 export function getDomElementPosition(domElement: HTMLElement) {
     const postion = domElement.getBoundingClientRect();
@@ -78,4 +78,28 @@ export function removeDomEvent(
 
 export const immediate = (fn: FnType) => {
     return Promise.resolve().then(fn);
+};
+
+// 判断节点是否锁定
+// 获取当前节点或者祖先节点的locked配置
+type nodeLockedInfo = {
+    result: boolean;
+    lockedNode?: TreeNode;
+};
+export const getNodeLocked = (node: TreeNode) => {
+    const ret: nodeLockedInfo = {
+        result: false
+    };
+    node.traveseParent(node => {
+        const locked = node.configApplier.getCurrentConfig(
+            'componentEditConfig.locked'
+        );
+        // 当获取到被锁定的节点后跳出遍历
+        if (locked === true) {
+            ret.result = true;
+            ret.lockedNode = node;
+            return true;
+        }
+    });
+    return ret;
 };

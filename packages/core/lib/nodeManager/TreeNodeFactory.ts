@@ -69,7 +69,7 @@ class TreeNodeFactory {
 
             const copyNode = this.createTeeNode(nodeConfig, parentNode);
 
-            hander(node);
+            hander(copyNode);
             const childrens = copyNode.childNodes.map(childNode => {
                 return iteratorCreateTreeNode(childNode, copyNode);
             });

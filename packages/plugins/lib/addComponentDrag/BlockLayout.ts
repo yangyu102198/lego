@@ -6,17 +6,19 @@ import {
 } from './type';
 import { ComponentLayoutName } from '@lego/core';
 import Layout from './Layout';
+import { getNodeLocked } from '../utils';
 
 // 页面级容器，可以添加所有容器
 export default class BlockLayout extends Layout {
     layoutType = ComponentLayoutName.Block;
-    constructor(id) {
-        super(id);
+    constructor(node) {
+        super(node);
     }
     accept(message: Message) {
         if (
             (!message.target || message.target == ComponentLayoutName.Atom) &&
-            message.id !== this.id
+            message.id !== this.node.id &&
+            !getNodeLocked(this.node).result
         ) {
             return true;
         } else {

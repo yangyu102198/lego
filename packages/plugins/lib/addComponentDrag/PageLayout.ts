@@ -8,8 +8,8 @@ import { ComponentLayoutName } from '@lego/core';
 
 // 页面级容器，可以添加所有容器
 export default class PageLayout extends Layout {
-    constructor(id) {
-        super(id);
+    constructor(node) {
+        super(node);
     }
     accept() {
         return true;

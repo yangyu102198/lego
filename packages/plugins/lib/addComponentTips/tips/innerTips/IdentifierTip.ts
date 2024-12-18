@@ -1,12 +1,12 @@
-import identifierTips from './identifierTips.vue';
-import BaseTips from './BaseTIps';
+import identifierTip from './identifierTip.vue';
+import BaseTip from './BaseTip';
 import { h } from 'vue';
 
-export const IdentifierTips: BaseTips = {
-    tipsName: 'identifierTips',
+export const IdentifierTip: BaseTip = {
+    tipName: 'identifierTips',
     hideComponent: [],
     render(engin, treeNode, activedNodeController) {
-        return h(identifierTips, {
+        return h(identifierTip, {
             engin,
             treeNode,
             activedNodeController

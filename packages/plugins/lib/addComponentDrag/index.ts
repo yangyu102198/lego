@@ -27,7 +27,7 @@ const bindTreeNodeCreateHook = engin => {
         // 当节点和组件绑定的时候，创建linker，并且绑定组件根节点的拖动事件
         node.event.on('setComponent', (component: any) => {
             // 创建对应的区域
-            const specilLayout = new LayoutCtrMap[nodeLayout](node.id);
+            const specilLayout = new LayoutCtrMap[nodeLayout](node);
             // 创建区域连接器
             linker = new LayoutEventLinker(
                 node,
