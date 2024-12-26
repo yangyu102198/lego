@@ -12,13 +12,19 @@
                     <editPanel :engin="engin"></editPanel>
                 </div>
             </div>
-            <div class="body__right"></div>
+            <div class="body__right">
+                <div class="boxy-right__container">
+                    <activeEditorPanel :engin="engin"></activeEditorPanel>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import navComponent from '@lego/vue-component/nav';
 import editPanel from '@lego/vue-component/editPanel';
+import activeEditorPanel from '@lego/vue-component/activeEditorPanel';
+
 import { ref, reactive } from 'vue';
 import { getEngin, getMetrial } from '@/engin';
 const loading = ref(true);

@@ -4,6 +4,11 @@
         :is="props.treeNode.configApplier.getCurrentConfig('componentName')"
         :engin="props.engin"
         :treeNode="props.treeNode"
+        :style="
+            props.treeNode.configApplier.getCurrentConfig(
+                'componentConfig.style'
+            ) || ''
+        "
     >
         <childComponent
             v-if="treeNode.childNodes.length"

@@ -17,12 +17,16 @@ export interface MeterialMeta {
 }
 
 type PropsAndExtraBase = Record<keyof any, any>;
+type StyleBase = Record<keyof any, any>;
 
 // 组件资源中组件的配置
 export interface ComponentConfig {
-    props?: PropsAndExtraBase;
+    props?: PropsAndExtraBase | boolean;
+    // 暴露出来的方法
     publicMethod?: string[];
-    publicEvent?: string[];
+    // 发布的事件
+    publicEvent?: (string | { name: string; params: string[] })[];
+    styles?: StyleBase | boolean;
     extra?: PropsAndExtraBase;
 }
 
@@ -64,9 +68,16 @@ export interface ComponentMeterialMeta<
         ComponentLayoutClassify,
         LayoutName
     >];
+    componentEditPanel?: any[];
     componentName: string;
     componentIcon?: string;
     componentLayoutType?: LayoutName;
+}
+
+// setter资源配置
+export interface SetterMeterialMeta extends MeterialMeta {
+    type: 'setter';
+    setterName: string;
 }
 
 // 保存的节点树资源配置

@@ -29,7 +29,7 @@ export class ActivedNodeController {
     }
     handlerSelectedNodes(node: TreeNode, isClear = true) {
         const { result, lockedNode } = getNodeLocked(node);
-        const currentSelectedNode = this.getSelectedNodes();
+        const currentSelectedNode = [...this.getSelectedNodes()];
         if (result) {
             node = lockedNode!;
         }
@@ -39,7 +39,24 @@ export class ActivedNodeController {
         currentSelectedNode.push(node);
         this.handlerSelectedChanged(currentSelectedNode);
     }
-
+    private diffSelectedNodes(nodes: TreeNode[]) {
+        const oldSelectedNodesIds = this.getSelectedNodes().map(
+            treeNode => treeNode.id
+        );
+        const newSelectedNodeIds = nodes.map(treeNode => treeNode.id);
+        const oldIdSet = new Set(oldSelectedNodesIds);
+        const newIdSet = new Set(newSelectedNodeIds);
+        const mergeIdSet = new Set([
+            ...oldSelectedNodesIds,
+            ...newSelectedNodeIds
+        ]);
+        if (
+            oldIdSet.size == newIdSet.size &&
+            oldIdSet.size == mergeIdSet.size
+        ) {
+            return true;
+        }
+    }
     removeSelectedNode(nodes?: TreeNode[]) {
         const currentSelectedNode = this.getSelectedNodes();
         const ids = currentSelectedNode.map(node => node.id);
@@ -57,7 +74,8 @@ export class ActivedNodeController {
     }
 
     private handlerSelectedChanged(currentSelectedNode: TreeNode[]) {
-        this.handler('treeNode-actived', currentSelectedNode);
+        if (!this.diffSelectedNodes(currentSelectedNode))
+            this.handler('treeNode-actived', currentSelectedNode);
     }
 }
 
@@ -69,6 +87,9 @@ export default {
             node.event.on('destroyedComponent', () => {
                 controller.removeSelectedNode([node]);
             });
+        });
+        engin.eventBus.on('handlerSelectedNodes', nodes => {
+            controller.handlerSelectedNodes(nodes);
         });
         return controller;
     }

@@ -1,14 +1,23 @@
-import blockContainerPlugin, {
+import blockContainerMeterial, {
     blockContainerComponent
 } from './blockContainer';
-import pageContainerPlugin from './pageContainer/index';
-import testPlugin from './text/index';
-import innerBlockTest from './innerBlockTest/index';
+import pageContainerMeterial, {
+    pageContainerComponent
+} from './pageContainer/index';
+import textMeterial, { textComponent } from './text/index';
+import innerBlockContainerMeterial, {
+    innerBlockContainerComponent
+} from './innerBlockContainer/index';
 
 export default [
-    blockContainerPlugin,
-    pageContainerPlugin,
-    testPlugin,
-    innerBlockTest
+    blockContainerMeterial,
+    pageContainerMeterial,
+    textMeterial,
+    innerBlockContainerMeterial
 ];
-export { blockContainerComponent, blockContainerPlugin, pageContainerPlugin };
+export {
+    blockContainerComponent,
+    pageContainerComponent,
+    textComponent,
+    innerBlockContainerComponent
+};

@@ -1,0 +1,23 @@
+.active-editor-panel__title {
+  font-size: 12px;
+  height: 30px;
+  border-bottom: 1px solid #eee;
+  padding-left: 20px;
+  color: #666;
+}
+.active-editor-panel__title {
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+.active-editor-panel__breadcrumb {
+  display: flex;
+}
+.breadcrumb__font {
+  margin: 0 10px;
+  cursor: pointer;
+}
+.active-editor-panel__breadcrumb:last-child .breadcrumb__font {
+  cursor: default;
+  
+}

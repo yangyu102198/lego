@@ -1,0 +1,25 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": false,
+    "rootDir": "./lib",
+    "paths": {
+      "@type/*": [
+        "./lib/types/*"
+      ],
+      "@utils/*": [
+        "./lib/utils/*"
+      ],
+    }
+  },
+  "include": [
+    "lib/**/*.tsx",
+    "lib/**/*.ts",
+    "lib/**/*.d.ts",
+    "lib/**/*.vue",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
+}

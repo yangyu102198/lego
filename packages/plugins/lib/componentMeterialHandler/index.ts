@@ -1,4 +1,4 @@
-import { Engin, type Plugin } from '@lego/core';
+import { Engin, type Plugin, ComponentMeterialMeta } from '@lego/core';
 
 /**
  * 组件初始化插件，
@@ -30,7 +30,11 @@ export const componentMeterialHandler = (fn: Fn): Plugin => {
                                         this.$props.treeNode.destroyedComponent();
                                 }
                             });
-                            fn(meterial.name, component);
+                            fn(
+                                (meterial as ComponentMeterialMeta)
+                                    .componentName,
+                                component
+                            );
                         }
                     });
                 }

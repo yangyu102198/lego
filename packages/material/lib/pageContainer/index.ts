@@ -1,5 +1,5 @@
 import { type ComponentMeterialMeta, ComponentLayoutName } from '@lego/core';
-import pageContainer from './pageContainer.vue';
+import pageContainerComponent from './pageContainer.vue';
 const pageContainerMeterial: ComponentMeterialMeta<ComponentLayoutName.Page> = {
     version: 'v0.1.1',
     type: 'component',
@@ -13,7 +13,8 @@ const pageContainerMeterial: ComponentMeterialMeta<ComponentLayoutName.Page> = {
         drag: false
     },
     getMetrial() {
-        return pageContainer;
+        return pageContainerComponent;
     }
 };
 export default pageContainerMeterial;
+export { pageContainerComponent };

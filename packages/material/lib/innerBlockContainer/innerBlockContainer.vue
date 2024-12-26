@@ -1,6 +1,5 @@
 <template>
-    <div class="test-container" style="display: inline-block">
-        test
+    <div class="inner-container" style="display: inline-block">
         <innerBlockComponent
             :index="0"
             :parentTreeNode="props.treeNode"

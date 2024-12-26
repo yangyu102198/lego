@@ -520,6 +520,82 @@ importers:
         specifier: ^8.7.0
         version: 8.12.2(eslint@9.14.0(jiti@2.4.0))(typescript@5.4.2)
 
+  packages/setter:
+    dependencies:
+      vue:
+        specifier: ^3.5.3
+        version: 3.5.12(typescript@5.4.2)
+    devDependencies:
+      '@eslint/js':
+        specifier: ^9.11.1
+        version: 9.14.0
+      '@lego/core':
+        specifier: workspace:^
+        version: link:../core
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      eslint:
+        specifier: ^9.11.1
+        version: 9.14.0(jiti@2.4.0)
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@9.14.0(jiti@2.4.0))
+      eslint-plugin-prettier:
+        specifier: ^5.2.1
+        version: 5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@9.1.0(eslint@9.14.0(jiti@2.4.0)))(eslint@9.14.0(jiti@2.4.0))(prettier@3.3.3)
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
+      glob:
+        specifier: 11.0.0
+        version: 11.0.0
+      globals:
+        specifier: ^15.9.0
+        version: 15.11.0
+      monaco-editor:
+        specifier: ^0.52.2
+        version: 0.52.2
+      postcss-html:
+        specifier: ^1.7.0
+        version: 1.7.0
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+      stylelint:
+        specifier: ^16.9.0
+        version: 16.10.0(typescript@5.4.2)
+      stylelint-config-html:
+        specifier: ^1.1.0
+        version: 1.1.0(postcss-html@1.7.0)(stylelint@16.10.0(typescript@5.4.2))
+      stylelint-config-prettier-scss:
+        specifier: ^1.0.0
+        version: 1.0.0(stylelint@16.10.0(typescript@5.4.2))
+      stylelint-config-recess-order:
+        specifier: ^5.1.1
+        version: 5.1.1(stylelint@16.10.0(typescript@5.4.2))
+      stylelint-config-recommended-scss:
+        specifier: ^14.1.0
+        version: 14.1.0(postcss@8.4.47)(stylelint@16.10.0(typescript@5.4.2))
+      stylelint-config-recommended-vue:
+        specifier: ^1.5.0
+        version: 1.5.0(postcss-html@1.7.0)(stylelint@16.10.0(typescript@5.4.2))
+      stylelint-config-standard:
+        specifier: ^36.0.1
+        version: 36.0.1(stylelint@16.10.0(typescript@5.4.2))
+      stylelint-config-standard-scss:
+        specifier: ^13.1.0
+        version: 13.1.0(postcss@8.4.47)(stylelint@16.10.0(typescript@5.4.2))
+      stylelint-prettier:
+        specifier: ^5.0.2
+        version: 5.0.2(prettier@3.3.3)(stylelint@16.10.0(typescript@5.4.2))
+      typescript:
+        specifier: 5.4.2
+        version: 5.4.2
+      typescript-eslint:
+        specifier: ^8.7.0
+        version: 8.12.2(eslint@9.14.0(jiti@2.4.0))(typescript@5.4.2)
+
   packages/vue-component:
     dependencies:
       '@iconify/iconify':
@@ -3597,6 +3673,9 @@ packages:
 
   mlly@1.7.2:
     resolution: {integrity: sha512-tN3dvVHYVz4DhSXinXIk7u9syPYaJvio118uomkovAtWBT+RdbP6Lfh/5Lvo519YMmwBafwlh20IPTXIStscpA==}
+
+  monaco-editor@0.52.2:
+    resolution: {integrity: sha512-GEQWEZmfkOGLdd3XK8ryrfWz3AIP8YymVXiPHEdewrUq7mh0qrKrfHLNCXcbB6sTnMLnOZ3ztSiKcciFUkIJwQ==}
 
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -8477,6 +8556,8 @@ snapshots:
       pathe: 1.1.2
       pkg-types: 1.2.1
       ufo: 1.5.4
+
+  monaco-editor@0.52.2: {}
 
   ms@2.0.0: {}
 

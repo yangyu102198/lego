@@ -1,6 +1,7 @@
 import { defineAsyncComponent } from 'vue';
 import {
     componentMeterialHandler,
+    setterMeterialHandler,
     addComponentDrag,
     addComponentTips
 } from '@lego/plugins';
@@ -19,13 +20,16 @@ export function getEngin() {
             persistent: true
         },
         plugins: [
-            componentMeterialHandler((name, component) => {
+            componentMeterialHandler((componentName, component) => {
                 app.component(
-                    name,
+                    componentName,
                     typeof component == 'function'
                         ? defineAsyncComponent(component)
                         : component
                 );
+            }),
+            setterMeterialHandler((setterName, setter) => {
+                app.component(setterName, setter);
             }),
             addComponentDrag(),
             addComponentTips()
