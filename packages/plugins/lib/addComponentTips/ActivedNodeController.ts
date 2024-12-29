@@ -1,13 +1,10 @@
 import { TreeNode, FnType, Engin } from '@lego/core';
 import { HoverNodeMessage } from './types';
 import { getNodeLocked } from '../utils';
-
+import Dispatcher from './Dispatcher';
 // hover和选中节点的处理器
 export class ActivedNodeController {
-    constructor(
-        private handler: FnType,
-        private getSelectedNodes: () => TreeNode[]
-    ) {}
+    constructor(private dispatcher: Dispatcher) {}
 
     handlerHoverNode(node?: TreeNode) {
         let hoverNode: HoverNodeMessage | null = null;
@@ -25,7 +22,7 @@ export class ActivedNodeController {
                 };
             }
         }
-        this.handler('treeNode-hover', hoverNode);
+        this.dispatcher.dispatchControllerEvent('treeNode-hover', hoverNode);
     }
     handlerSelectedNodes(selectedNodes: TreeNode[]) {
         const handleNodes = [...selectedNodes];
@@ -39,7 +36,7 @@ export class ActivedNodeController {
     }
 
     removeSelectedNode(nodes?: TreeNode[]) {
-        const currentSelectedNode = [...this.getSelectedNodes()];
+        const currentSelectedNode = [...this.dispatcher.getSelectedNode()];
         const ids = currentSelectedNode.map(node => node.id);
         if (!nodes) {
             currentSelectedNode.length = 0;
@@ -55,19 +52,38 @@ export class ActivedNodeController {
     }
 }
 
-export default {
-    init(handler: FnType, getSelectedNodes: FnType, engin: Engin) {
-        const controller = new ActivedNodeController(handler, getSelectedNodes);
+const __handlerList: FnType[] = [];
 
-        engin.hooks.treeNodeCreate.tap(node => {
+const ActivedNodeControllerManager = {
+    init(dispatcher: Dispatcher, engin: Engin) {
+        const controller = new ActivedNodeController(dispatcher);
+
+        const removeCreateEvent = engin.hooks.treeNodeCreate.tap(node => {
             node.event.on('destroyedComponent', () => {
                 const nodes = controller.removeSelectedNode([node]);
-                handler('set-Selected-treeNode', nodes);
+                dispatcher.dispatchControllerEvent(
+                    'set-Selected-treeNode',
+                    nodes
+                );
             });
         });
-        engin.hooks.handlerSelectedNodes.tap(nodes => {
-            return controller.handlerSelectedNodes(nodes);
+        const removeSelectedEvent = engin.hooks.handlerSelectedNodes.tap(
+            nodes => {
+                return controller.handlerSelectedNodes(nodes);
+            }
+        );
+        __handlerList.push(() => {
+            removeCreateEvent();
+            removeSelectedEvent();
         });
         return controller;
+    },
+    destroyed() {
+        let fn: FnType | undefined;
+        while ((fn = __handlerList.shift())) {
+            fn();
+        }
     }
 };
+
+export default ActivedNodeControllerManager;

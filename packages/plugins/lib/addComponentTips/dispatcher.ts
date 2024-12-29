@@ -2,38 +2,44 @@ import { Engin, TreeNode } from '@lego/core';
 import { ActivedNodeController } from './ActivedNodeController';
 import { HoverNodeMessage } from './types';
 
-export const dispatchComponentEvent =
-    (engin: Engin, controller: ActivedNodeController) =>
-    (eventName: string, event: Event, node: TreeNode) => {
+export default class Dispatcher {
+    controller!: ActivedNodeController;
+    constructor(public engin: Engin) {}
+    setController(controller: ActivedNodeController) {
+        this.controller = controller;
+    }
+    getSelectedNode(): TreeNode[] {
+        return [...this.engin.treeNodeManager.selectedNode];
+    }
+    // 发送组件绑定的事件
+    dispatchComponentEvent(eventName: string, event: Event, node: TreeNode) {
         event.stopPropagation();
         switch (eventName) {
             case 'mouseover':
-                controller.handlerHoverNode(node);
+                this.controller.handlerHoverNode(node);
                 break;
             case 'mouseout':
-                controller.handlerHoverNode();
+                this.controller.handlerHoverNode();
                 break;
             case 'click':
-                engin.treeNodeManager.setSelectedNode(node);
+                this.engin.treeNodeManager.setSelectedNode(node);
                 break;
         }
-    };
-
-//TODU: treeNode-hover 和actived分别用了两种不同方式
-export const dispatchControllerEvent =
-    (engin: Engin) => (event: string, data: any) => {
+    }
+    dispatchControllerEvent(event: string, data: any) {
         switch (event) {
             case 'treeNode-hover':
-                engin.eventBus.emit(
+                this.engin.eventBus.emit(
                     'treeNode-hover',
                     data as HoverNodeMessage | null
                 );
                 break;
             case 'set-Selected-treeNode':
-                engin.treeNodeManager.setSelectedNode(data);
+                this.engin.treeNodeManager.setSelectedNode(data);
                 break;
             case 'treeNode-actived-resize':
-                engin.eventBus.emit('treeNode-actived-resize', data);
+                this.engin.eventBus.emit('treeNode-actived-resize', data);
                 break;
         }
-    };
+    }
+}

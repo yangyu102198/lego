@@ -2,7 +2,7 @@ import TipsManager from './tips';
 import { Engin, type Plugin, type FnType } from '@lego/core';
 import ActivedNodeManager from './ActivedNodeController';
 import TipsContainerController from './TipsContainerController';
-import { dispatchControllerEvent, dispatchComponentEvent } from './dispatcher';
+import Dispatcher from './Dispatcher';
 import ObserverResizeManager from './ObserverResize';
 import createNewGetmetrialHanler from './createNewGetmetrialHanler';
 
@@ -18,15 +18,16 @@ export const addComponentTips = (
             if (engin.option.state != 'edit') {
                 return;
             }
-            const dispatchController = dispatchControllerEvent(engin);
+            // 创建分发器
+            const dispatcher = new Dispatcher(engin);
+            // 创建节点激活控制器
             const activedNodeController = ActivedNodeManager.init(
-                dispatchController,
-                () => engin.treeNodeManager.selectedNode,
+                dispatcher,
                 engin
             );
-
-            ObserverResizeManager.init(dispatchController, engin);
-
+            // 创建节点尺寸变化管理者
+            ObserverResizeManager.init(dispatcher, engin);
+            dispatcher.setController(activedNodeController);
             engin.hooks.treeNodeCreate.tap(node => {
                 if (
                     node.configApplier.getDefaultConfig('componentName') ==
@@ -45,10 +46,7 @@ export const addComponentTips = (
                         if (meterial.type == 'component') {
                             meterial.getMetrial = createNewGetmetrialHanler(
                                 meterial,
-                                dispatchComponentEvent(
-                                    engin,
-                                    activedNodeController
-                                )
+                                dispatcher
                             );
                         }
                     });

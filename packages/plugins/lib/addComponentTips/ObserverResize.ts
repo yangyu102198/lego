@@ -1,10 +1,11 @@
-import { FnType, TreeNode, Engin } from '@lego/core';
+import { TreeNode, Engin } from '@lego/core';
 import { TreeObserver } from './types';
+import Dispatcher from './Dispatcher';
 
 class ObserveResize {
     private observeList: TreeObserver[] = [];
     private Observer: ResizeObserver;
-    constructor(private resizeHandler: FnType) {
+    constructor(private dispatcher: Dispatcher) {
         this.Observer = new ResizeObserver(entries => {
             this.handlerResize(entries);
         });
@@ -66,7 +67,10 @@ class ObserveResize {
         });
         // 当有节点发生了尺寸变化时，触发treeNode-actived-resize回调
         if (resizeNode.length) {
-            this.resizeHandler('treeNode-actived-resize', resizeNode);
+            this.dispatcher.dispatchControllerEvent(
+                'treeNode-actived-resize',
+                resizeNode
+            );
         }
     }
 }
@@ -74,8 +78,8 @@ class ObserveResize {
 let resizeObserver: ObserveResize | null = null;
 
 export default {
-    init(handler, engin) {
-        resizeObserver = new ObserveResize(handler);
+    init(dispatcher, engin) {
+        resizeObserver = new ObserveResize(dispatcher);
         this.addEvent(engin);
         return resizeObserver;
     },
