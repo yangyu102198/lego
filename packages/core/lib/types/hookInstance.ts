@@ -17,7 +17,14 @@ export interface HooksInstanceFunction {
     // 资源相关
     meterialRegisterFinish(meterialList: MeterialMeta[]): void;
     // 节点相关
+    // 选择节点
     selectedNode(nodes: TreeNode[]): void;
+    // 处理选择的节点
+    handlerSelectedNodes(
+        nodes: TreeNode[],
+        hasSelectedNode: TreeNode[],
+        isClear: boolean
+    ): TreeNode[] | void;
     rootNodeActived(node: TreeNode | null): void;
     treeNodeCreate(node: TreeNode): void;
     treeNodeDestory(node: TreeNode): void;
@@ -31,6 +38,7 @@ export type SyncHooksInstance =
     | 'enginFlowEnd'
     | 'rootNodeActived'
     | 'selectedNode'
+    | 'handlerSelectedNodes'
     | 'treeNodeCreate'
     | 'treeNodeDestory';
 // 所有插件的钩子
@@ -45,6 +53,7 @@ export const HookMapHookInstance = {
     enginFlowEnd: 'SyncHook',
     rootNodeActived: 'SyncHook',
     selectedNode: 'SyncHook',
+    handlerSelectedNodes: 'SyncWaterHook',
     treeNodeCreate: 'SyncHook',
     treeNodeDestory: 'SyncHook'
 } as const satisfies Partial<Record<HooksInstance, HookInstanceName>>;

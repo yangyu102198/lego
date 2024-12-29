@@ -50,6 +50,9 @@ export default meterial => {
                         },
                         newValue => {
                             this.$el.draggable = !newValue;
+                        },
+                        {
+                            immediate: true
                         }
                     );
                     bindDomEvent(

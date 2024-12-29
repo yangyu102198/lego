@@ -45,7 +45,7 @@ export class SpecificHookBase<
         }
         return this.hook.tap(arg);
     }
-    call<R>(...args: Params): GetHookFunctionRetrun<R, U> {
+    call<RET = R>(...args: Params): GetHookFunctionRetrun<RET, U> {
         return this.hook[this.applyName](...args) as any;
     }
 }

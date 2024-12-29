@@ -6,14 +6,12 @@
 <script lang="ts" setup>
 import { icon } from '@lego/vue-component';
 import { TreeNode, Engin } from '@lego/core';
-import { ActivedNodeController } from '../../ActivedNodeController';
 import { immediate } from '../../../utils';
 import BaseTip from './BaseTip';
 
 const props = defineProps<{
     treeNode: TreeNode;
     engin: Engin;
-    activedNodeController: ActivedNodeController;
     tip: BaseTip;
 }>();
 const copyNode = _ => {
@@ -27,7 +25,7 @@ const copyNode = _ => {
         const index = parentNode.getChldNodeIndex(props.treeNode);
         parentNode.insertNode(index + 1, node);
         // 选中当前节点
-        immediate(() => props.activedNodeController.handlerSelectedNodes(node));
+        immediate(() => props.engin.treeNodeManager.setSelectedNode(node));
     }
 };
 </script>

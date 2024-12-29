@@ -65,6 +65,6 @@ const activeTreeNodeAndParent = computed(() => {
     return getActiveTreeNodeAndParent().reverse();
 });
 const selectNode = (node: TreeNode) => {
-    props.engin.eventBus.emit('handlerSelectedNodes', node);
+    props.engin.treeNodeManager.setSelectedNode(node);
 };
 </script>

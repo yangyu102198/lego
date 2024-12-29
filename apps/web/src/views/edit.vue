@@ -34,9 +34,7 @@ const init = async () => {
     await engin.init();
     await engin.meterialManager.register(getMetrial());
     // 激活treeNodeManager
-    engin.treeNodeManager.treeNodeContainer = reactive(
-        engin.treeNodeManager.treeNodeContainer
-    ) as typeof engin.treeNodeManager.treeNodeContainer;
+    engin.treeNodeManager = reactive(engin.treeNodeManager) as any;
     engin.treeNodeManager.createRootTreeNode();
     loading.value = false;
 };

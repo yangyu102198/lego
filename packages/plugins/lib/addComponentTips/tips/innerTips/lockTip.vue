@@ -24,12 +24,10 @@ import BaseTip from './BaseTip';
 import { icon } from '@lego/vue-component';
 import { TreeNode, Engin } from '@lego/core';
 import { getNodeLocked } from '../../../utils';
-import { ActivedNodeController } from '../../ActivedNodeController';
 
 const props = defineProps<{
     treeNode: TreeNode;
     engin: Engin;
-    activedNodeController: ActivedNodeController;
     tip: BaseTip;
 }>();
 

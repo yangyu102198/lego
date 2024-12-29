@@ -9,8 +9,11 @@ import Meterial from '../meterial';
 
 const cache = new ExpiredCache();
 export default class TreeNodeManage {
+    // 激活的根节点
     public rootNodeActived!: TreeNode | null;
+    // 节点树容器
     public treeNodeContainer: TreeNode[] = [];
+    // 选中的节点
     public selectedNode: TreeNode[] = [];
     private treeNodeFactory: TreeNodeFactory;
     constructor(
@@ -108,9 +111,42 @@ export default class TreeNodeManage {
         this.rootNodeActived = treeNode;
         this.driver.rootNodeActived.call(treeNode);
     }
-    setSelectedNode(selectedNode: TreeNode[]) {
-        this.selectedNode = selectedNode;
-        this.driver.selectedNode.call(selectedNode);
+    setSelectedNode(selectedNode: TreeNode | TreeNode[], isClear = true) {
+        selectedNode = Array.isArray(selectedNode)
+            ? selectedNode
+            : [selectedNode];
+
+        // 调用处理程序处理选择的节点
+        let result = this.driver.handlerSelectedNodes.call<TreeNode[]>(
+            selectedNode,
+            this.selectedNode,
+            isClear
+        );
+        result = [
+            ...new Set([...result, ...(isClear ? [] : this.selectedNode)])
+        ];
+
+        // 判断处理后的选择节点是否和当前相同
+        const diff = () => {
+            const oldSelectedNodesIds = this.selectedNode.map(node => node.id);
+            const newSelectedNodeIds = result.map(node => node.id);
+            const oldIdSet = new Set(oldSelectedNodesIds);
+            const newIdSet = new Set(newSelectedNodeIds);
+            const mergeIdSet = new Set([
+                ...oldSelectedNodesIds,
+                ...newSelectedNodeIds
+            ]);
+            if (
+                oldIdSet.size == newIdSet.size &&
+                oldIdSet.size == mergeIdSet.size
+            ) {
+                return true;
+            }
+        };
+        if (!diff()) {
+            this.selectedNode = result;
+            this.driver.selectedNode.call(result);
+        }
     }
     copyNodeAndChild(node: TreeNode) {
         const copyNode = this.treeNodeFactory.copyNodeAndChild(node, node => {

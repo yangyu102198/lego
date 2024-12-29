@@ -20,11 +20,10 @@ export const LockTip: BaseTip = {
             return false;
         }
     },
-    render(engin, treeNode, activedNodeController) {
+    render(engin, treeNode) {
         return h(lockTip, {
             engin,
             treeNode,
-            activedNodeController,
             tip: this
         });
     }

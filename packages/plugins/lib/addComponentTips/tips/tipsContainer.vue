@@ -15,11 +15,7 @@
             v-bind:key="`actived-${index}`"
             :style="getPositionStyle(item.position)"
         >
-            <tips
-                :engin="props.engin"
-                :treeNode="item.selectedNode"
-                :activedNodeController="props.activedNodeController"
-            ></tips>
+            <tips :engin="props.engin" :treeNode="item.selectedNode"></tips>
         </div>
     </div>
 </template>
@@ -27,12 +23,10 @@
 import { Engin, TreeNode } from '@lego/core';
 import { onUnmounted } from 'vue';
 import userTipsContainer from './userTipsContainer';
-import { ActivedNodeController } from '../ActivedNodeController';
 import tips from './tips.vue';
 const props = defineProps<{
     engin: Engin;
     containerNode: TreeNode;
-    activedNodeController: ActivedNodeController;
 }>();
 const tipsContainerHook = userTipsContainer(props.engin, props.containerNode);
 onUnmounted(tipsContainerHook.unbind);

@@ -2,13 +2,12 @@ import { bindDomEvent, removeDomEvent } from '../utils';
 import { dispatchComponentEvent } from './dispatcher';
 import { TreeNode } from '@lego/core';
 import { DefineComponent } from 'vue';
-import { ActivedNodeController } from './ActivedNodeController';
 
 type ComponentCtr = DefineComponent<{ treeNode: TreeNode }>;
 
 const createNewGetmetrialHanler = (
     meterial,
-    controller: ActivedNodeController
+    dispatcher: ReturnType<typeof dispatchComponentEvent>
 ) => {
     const { getMetrial } = meterial;
     return () => {
@@ -17,12 +16,7 @@ const createNewGetmetrialHanler = (
         baseComponent.mixins.push({
             mounted() {
                 const handler = (eventName, event) => {
-                    dispatchComponentEvent(
-                        eventName,
-                        event,
-                        this.$props.treeNode,
-                        controller
-                    );
+                    dispatcher(eventName, event, this.$props.treeNode);
                 };
                 bindDomEvent(
                     this.$el,

@@ -1,7 +1,9 @@
 import { type HookMeta } from '@type/hook';
 import { FnType } from '@type/utils';
 
-type ExcludeLastParameter<T> = T extends [...infer U, unknown] ? U : never;
+// type ExcludeLastParameter<T> = T extends [...infer U, unknown] ? U : never;
+// type ExcludeLastParameter<T> = T extends [unknown, ...infer U] ? U : never;
+
 type MaybeVoid<T> = T | void;
 type MaybeUnfined<T> = T | undefined;
 
@@ -33,18 +35,19 @@ class Hook<Params extends unknown[] = unknown[]> {
         return result;
     }
     // 异步顺序执行，下一个hook执行器会带上一个执行器的返回值
-    async AsyncSeriesWater<T>(
-        ...args: ExcludeLastParameter<Params>
-    ): Promise<MaybeVoid<T>> {
-        let preResult: MaybeUnfined<T>;
+    async AsyncSeriesWater(...args: Params) {
+        let first = args.shift();
         for (const hook of this.getHooks()) {
-            const extendedArgs = [...args, preResult] as Params;
-            preResult = await this.runAsync(
+            const extendedArgs = [first, ...args] as Params;
+            const result = await this.runAsync(
                 () => hook.handler(...extendedArgs),
                 hook
             );
+            if (result) {
+                first = result;
+            }
         }
-        return preResult;
+        return first;
     }
     // 异步顺序运行，当第一个hook有返回值时终止
     async AsyncSeriesFirstRet<T>(...args: Params): Promise<MaybeVoid<T>> {
@@ -77,17 +80,20 @@ class Hook<Params extends unknown[] = unknown[]> {
         }
     }
     // 同步顺序执行，下一个hook执行器会带上一个执行器的返回值
-    SyncWater<T>(...args: ExcludeLastParameter<Params>): MaybeVoid<T> {
-        let preResult: MaybeUnfined<T>;
+    SyncWater(...args: Params) {
+        let first = args.shift();
         for (const hook of this.getHooks()) {
-            const extendedArgs = [...args, preResult] as Params;
+            const extendedArgs = [first, ...args] as Params;
 
-            preResult = this.runSync(
+            const result = this.runSync(
                 () => hook.handler.apply(null, extendedArgs),
                 hook
             );
+            if (result) {
+                first = result;
+            }
         }
-        return preResult;
+        return first;
     }
     tap(hander: HookMeta<Params>) {
         if (!hander.priority) {

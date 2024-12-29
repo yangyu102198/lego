@@ -5,11 +5,10 @@ import { h } from 'vue';
 export const IdentifierTip: BaseTip = {
     tipName: 'identifierTips',
     hideComponent: [],
-    render(engin, treeNode, activedNodeController) {
+    render(engin, treeNode) {
         return h(identifierTip, {
             engin,
-            treeNode,
-            activedNodeController
+            treeNode
         });
     }
 };

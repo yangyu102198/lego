@@ -46,7 +46,6 @@
 <script lang="ts" setup>
 import { icon } from '@lego/vue-component';
 import { TreeNode, Engin } from '@lego/core';
-import { ActivedNodeController } from '../../ActivedNodeController';
 import { computed } from 'vue';
 import { ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus';
 import 'element-plus/es/components/dropdown/style/index';
@@ -56,7 +55,6 @@ import 'element-plus/es/components/dropdown-menu/style/index';
 const props = defineProps<{
     treeNode: TreeNode;
     engin: Engin;
-    activedNodeController: ActivedNodeController;
 }>();
 type NodeMessage = {
     node: TreeNode;
@@ -77,7 +75,7 @@ const getChainNodeMessage = (): NodeMessage[] => {
     return nodeChain;
 };
 const selectedNode = (item: NodeMessage) => {
-    props.activedNodeController.handlerSelectedNodes(item.node);
+    props.engin.treeNodeManager.setSelectedNode(item.node);
 };
 const currentNodeMessage = computed(() => {
     return getChainNodeMessage()[0];

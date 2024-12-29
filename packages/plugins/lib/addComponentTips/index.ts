@@ -2,7 +2,7 @@ import TipsManager from './tips';
 import { Engin, type Plugin, type FnType } from '@lego/core';
 import ActivedNodeManager from './ActivedNodeController';
 import TipsContainerController from './TipsContainerController';
-import { dispatchControllerEvent } from './dispatcher';
+import { dispatchControllerEvent, dispatchComponentEvent } from './dispatcher';
 import ObserverResizeManager from './ObserverResize';
 import createNewGetmetrialHanler from './createNewGetmetrialHanler';
 
@@ -45,7 +45,10 @@ export const addComponentTips = (
                         if (meterial.type == 'component') {
                             meterial.getMetrial = createNewGetmetrialHanler(
                                 meterial,
-                                activedNodeController
+                                dispatchComponentEvent(
+                                    engin,
+                                    activedNodeController
+                                )
                             );
                         }
                     });

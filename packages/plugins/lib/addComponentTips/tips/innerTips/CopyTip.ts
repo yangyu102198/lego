@@ -6,11 +6,10 @@ export const CopyTip: BaseTip = {
     tipName: 'copyTip',
     tipIcon: 'material-symbols-light:copy-all-outline',
     hideComponent: ['pageContainer'],
-    render(engin, treeNode, activedNodeController) {
+    render(engin, treeNode) {
         return h(copyTip, {
             engin,
             treeNode,
-            activedNodeController,
             tip: this
         });
     }
