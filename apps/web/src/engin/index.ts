@@ -7,10 +7,11 @@ import {
 } from '@lego/plugins';
 import { Engin } from '@lego/core';
 import material from '@lego/material';
+import setter from '@lego/setter';
 import { doOne } from '@/utils';
 import { app } from '@/main';
 export const getMetrial = doOne(() => {
-    return [...material];
+    return [...material, ...setter];
 }, []);
 
 export function getEngin() {

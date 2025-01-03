@@ -27,7 +27,6 @@ export const addComponentTips = (
             );
             // 创建节点尺寸变化管理者
             ObserverResizeManager.init(dispatcher, engin);
-            dispatcher.setController(activedNodeController);
             engin.hooks.treeNodeCreate.tap(node => {
                 if (
                     node.configApplier.getDefaultConfig('componentName') ==

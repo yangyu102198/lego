@@ -13,7 +13,11 @@ class CoreRollupTaskFactory extends RollupTaskFactory {
             input: this.helpers.resolve('./lib/index.ts'),
             external: this.helpers.checkIsExternal.bind(this.helpers),
             plugins: [
-                dts(),
+                dts({
+                    compilerOptions: {
+                        preserveSymlinks: false
+                    }
+                }),
                 alias({
                     entries: this.helpers.getPathAlias()
                 })

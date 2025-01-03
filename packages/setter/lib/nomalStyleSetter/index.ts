@@ -5,8 +5,8 @@ const nomalStyleSetterMeterial: SetterMeterialMeta = {
     version: 'v0.1.1',
     type: 'setter',
     alias: '全局样式',
-    name: 'nomal-style',
-    setterName: 'nomal-style',
+    name: 'normal-style',
+    setterName: 'normal-style',
     getMetrial() {
         return NomalStyleSetter;
     }

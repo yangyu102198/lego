@@ -1,6 +1,5 @@
 import { type TreeNode, Engin, BaseSetter, SetterConfig } from '@lego/core';
-import StyleEditorSetter from '../styleEditorSetter/StyleEditorSetter';
-import nomalStyle from './nomalStyle.vue';
+import checkboxView from './checkboxView.vue';
 
 export default class NomalStyleSetter extends BaseSetter {
     constructor(
@@ -8,13 +7,19 @@ export default class NomalStyleSetter extends BaseSetter {
         public treeNode: TreeNode,
         public setterConfig: SetterConfig
     ) {
-        super(engin, treeNode, setterConfig);
+        super(
+            engin,
+            treeNode,
+            Object.assign(
+                {
+                    size: 'large'
+                },
+                setterConfig
+            )
+        );
         this.init();
     }
     init() {
-        this.addChildren([
-            new StyleEditorSetter(this.engin, this.treeNode, {})
-        ]);
-        this.addView(nomalStyle);
+        this.addView(checkboxView);
     }
 }

@@ -8,10 +8,10 @@
 .active-editor-panel__title {
   height: 30px;
   display: flex;
-  align-items: center;
 }
 .active-editor-panel__breadcrumb {
   display: flex;
+  align-items: center;
 }
 .breadcrumb__font {
   margin: 0 10px;
@@ -20,4 +20,7 @@
 .active-editor-panel__breadcrumb:last-child .breadcrumb__font {
   cursor: default;
   
+}
+.el-tabs__content {
+  overflow: visible!important;
 }

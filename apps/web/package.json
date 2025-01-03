@@ -13,6 +13,7 @@
         "@lego/material": "workspace:*",
         "@lego/plugins": "workspace:*",
         "@lego/vue-component": "workspace:*",
+        "@lego/setter": "workspace:*",
         "@vitejs/plugin-vue": "^5.1.2",
         "@vitejs/plugin-vue-jsx": "^4.1.0",
         "axios": "^1.7.7",

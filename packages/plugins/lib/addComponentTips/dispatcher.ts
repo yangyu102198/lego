@@ -1,13 +1,8 @@
 import { Engin, TreeNode } from '@lego/core';
-import { ActivedNodeController } from './ActivedNodeController';
 import { HoverNodeMessage } from './types';
 
 export default class Dispatcher {
-    controller!: ActivedNodeController;
     constructor(public engin: Engin) {}
-    setController(controller: ActivedNodeController) {
-        this.controller = controller;
-    }
     getSelectedNode(): TreeNode[] {
         return [...this.engin.treeNodeManager.selectedNode];
     }
@@ -16,10 +11,10 @@ export default class Dispatcher {
         event.stopPropagation();
         switch (eventName) {
             case 'mouseover':
-                this.controller.handlerHoverNode(node);
+                this.engin.eventBus.emit('set-treeNode-hover', node);
                 break;
             case 'mouseout':
-                this.controller.handlerHoverNode();
+                this.engin.eventBus.emit('set-treeNode-hover', null);
                 break;
             case 'click':
                 this.engin.treeNodeManager.setSelectedNode(node);

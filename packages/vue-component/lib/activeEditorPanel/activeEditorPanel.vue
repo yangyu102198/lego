@@ -4,6 +4,10 @@
             :engin="props.engin"
             :active-tree-node="RD.activeTreeNode"
         ></activeEditorTitle>
+        <activeEditorConfig
+            :engin="props.engin"
+            :active-tree-node="RD.activeTreeNode"
+        ></activeEditorConfig>
     </div>
     <div v-else>
         <span>请在左侧画布选中节点</span>
@@ -13,6 +17,7 @@
 import { reactive, onBeforeUnmount } from 'vue';
 import { type Engin } from '@lego/core';
 import activeEditorTitle from './activeEditorTitle.vue';
+import activeEditorConfig from './activeEditorConfig.vue';
 const props = defineProps<{
     engin: Engin;
 }>();

@@ -14,11 +14,9 @@
             ></icon>
             <span
                 class="breadcrumb__font"
-                @click="
-                    () =>
-                        index != activeTreeNodeAndParent.length - 1 &&
-                        selectNode(item.node)
-                "
+                @mouseout="() => notLast(index) && hoverNode()"
+                @mouseover="() => notLast(index) && hoverNode(item.node)"
+                @click="() => notLast(index) && selectNode(item.node)"
             >
                 {{ item.alias }}
             </span>
@@ -27,7 +25,7 @@
                 v-if="index != activeTreeNodeAndParent.length - 1"
                 icon="material-symbols-light:arrow-back-ios"
                 color="#a7afbb"
-                :size="20"
+                :size="15"
             ></icon>
         </span>
     </div>
@@ -42,9 +40,7 @@ const props = defineProps<{
     engin: Engin;
     activeTreeNode: TreeNode[];
 }>();
-const getActiveTreeNodeAndParent = () => {
-    // TODO:当前只处理一个激活节点
-    const activeTreeNode = props.activeTreeNode[0];
+const getActiveTreeNodeAndParent = (activeTreeNode: TreeNode) => {
     const messages: {
         node: TreeNode;
         componentIcon: string;
@@ -62,9 +58,14 @@ const getActiveTreeNodeAndParent = () => {
     return messages.length > 3 ? messages.slice(0, 3) : messages;
 };
 const activeTreeNodeAndParent = computed(() => {
-    return getActiveTreeNodeAndParent().reverse();
+    // TODO:当前只处理一个激活节点
+    return getActiveTreeNodeAndParent(props.activeTreeNode[0]).reverse();
 });
 const selectNode = (node: TreeNode) => {
     props.engin.treeNodeManager.setSelectedNode(node);
 };
+const hoverNode = (node?: TreeNode) => {
+    props.engin.eventBus.emit('set-treeNode-hover', node);
+};
+const notLast = index => index != activeTreeNodeAndParent.value.length - 1;
 </script>

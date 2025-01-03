@@ -22,7 +22,7 @@ export class ActivedNodeController {
                 };
             }
         }
-        this.dispatcher.dispatchControllerEvent('treeNode-hover', hoverNode);
+        return hoverNode;
     }
     handlerSelectedNodes(selectedNodes: TreeNode[]) {
         const handleNodes = [...selectedNodes];
@@ -72,9 +72,17 @@ const ActivedNodeControllerManager = {
                 return controller.handlerSelectedNodes(nodes);
             }
         );
+        const removeHoverEvent = engin.eventBus.on(
+            'set-treeNode-hover',
+            node => {
+                const hoverNode = controller.handlerHoverNode(node);
+                dispatcher.dispatchControllerEvent('treeNode-hover', hoverNode);
+            }
+        );
         __handlerList.push(() => {
             removeCreateEvent();
             removeSelectedEvent();
+            removeHoverEvent();
         });
         return controller;
     },
