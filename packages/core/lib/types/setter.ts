@@ -1,10 +1,11 @@
 import TreeNode from '../nodeManager/TreeNode';
 import Engin from '../engine';
-import BaseSetter from '../setter/BaseSetter';
+import { Component } from 'vue';
+import { FnType } from './utils';
 
 export interface Applyer {
-    getter(...arg: unknown[]): unknown;
-    setter(...arg: unknown[]): unknown;
+    getter(...arg: unknown[]): any;
+    setter(...arg: unknown[]): any;
     prop: string;
     treeNode: TreeNode;
     engin: Engin;
@@ -12,14 +13,11 @@ export interface Applyer {
 
 export type ApplerExtend = Partial<Pick<Applyer, 'getter' | 'setter'>>;
 export type ApplerParams = Pick<Applyer, 'engin' | 'prop' | 'treeNode'>;
-export type BaseSetterCtr = {
-    new (...arg: ConstructorParameters<typeof BaseSetter>): BaseSetter;
-};
 
 export interface SetterConfig {
     config?: Record<string, any>;
-    applyer?: Partial<Applyer>;
+    applyer?: Partial<Applyer> | FnType;
     prop?: string;
-    setter?: string | BaseSetterCtr;
+    setter?: string | Component;
     children?: SetterConfig[];
 }

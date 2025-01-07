@@ -29,7 +29,7 @@ const ApplyerFactory = (
     if (typeof applerExtend == 'function') {
         applerExtend = applerExtend(instance);
     }
-    return Object.assign(instance, applerExtend);
+    return Object.assign({}, instance, applerExtend);
 };
 
 export default ApplyerFactory;

@@ -78,6 +78,9 @@ export interface ComponentMeterialMeta<
 export interface SetterMeterialMeta extends MeterialMeta {
     type: 'setter';
     setterName: string;
+    setterConfig?: {
+        layout: boolean;
+    };
 }
 
 // 保存的节点树资源配置

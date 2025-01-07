@@ -1,9 +1,13 @@
 <template>
     <div class="checkbox-setter">
-        <el-radio-group v-model="radio" :size="props.setterConfig.size">
+        <el-radio-group
+            @update:modelValue="value => props.applyer.setter(value)"
+            :modelValue="props.applyer.getter()"
+            :size="props.setterConfig.config?.size || 'small'"
+        >
             <el-radio-button
                 :value="item.value"
-                v-for="(item, index) in setterConfig.list"
+                v-for="(item, index) in getList()"
                 :key="`checkbox-setter-${index}`"
             >
                 <icon
@@ -20,31 +24,27 @@
 <script lang="ts" setup>
 import { Applyer } from '@lego/core';
 import { icon } from '@lego/vue-component';
-import { ref, watch } from 'vue';
 import { ElRadioGroup, ElRadioButton } from 'element-plus';
-import './style/index.ts';
+import './style';
+
 const props = defineProps<{
     setterConfig: Record<string, any>;
     applyer: Applyer;
 }>();
-
-const radio = ref<any>(props.applyer.getter());
 const isIcon = item => {
-    return !item.type || item.type == 'icon';
+    return !(item.type && item.type != 'icon');
 };
-watch(
-    () => radio.value,
-    () => {
-        props.applyer.setter(radio.value);
-    }
-);
 const getIconSize = () => {
-    switch (props.setterConfig.size) {
+    const { config } = props.setterConfig || {};
+    switch (config.size) {
         case 'large':
             return 24;
         case 'small':
             return 18;
     }
     return 20;
+};
+const getList = () => {
+    return props.setterConfig.config?.list || [];
 };
 </script>

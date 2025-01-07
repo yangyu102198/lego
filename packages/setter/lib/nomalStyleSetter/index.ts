@@ -1,5 +1,5 @@
 import { type SetterMeterialMeta } from '@lego/core';
-import NomalStyleSetter from './NomalStyleSetter';
+import NomalStyleSetter from './nomalStyle.vue';
 
 const nomalStyleSetterMeterial: SetterMeterialMeta = {
     version: 'v0.1.1',

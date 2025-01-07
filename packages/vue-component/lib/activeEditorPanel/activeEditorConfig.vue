@@ -13,7 +13,7 @@
                 >
                     <setter
                         :engin="props.engin"
-                        :currentActiveTreeNode="currentActiveTreeNode"
+                        :treeNode="currentActiveTreeNode"
                         :setterConfig="setterConfig"
                     ></setter>
                 </div>
@@ -25,7 +25,7 @@
 import { computed, ref } from 'vue';
 import { Engin, TreeNode } from '@lego/core';
 import { ElTabPane, ElTabs } from 'element-plus';
-import setter from './setter.vue';
+import setter from '../setter';
 
 const props = defineProps<{
     engin: Engin;

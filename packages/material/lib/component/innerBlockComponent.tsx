@@ -2,7 +2,6 @@ import { defineComponent, type PropType } from 'vue';
 import { Engin, TreeNode } from '@lego/core';
 
 export default defineComponent({
-    // expose: ['removeTreeNode'],
     props: {
         index: { type: Number, required: true },
         engin: { type: Object as PropType<Engin>, required: true },

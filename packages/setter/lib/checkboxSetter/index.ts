@@ -1,5 +1,5 @@
 import { type SetterMeterialMeta } from '@lego/core';
-import checkboxSetter from './checkboxSetter';
+import checkboxSetter from './checkboxSetter.vue';
 
 const checkboxSetterMeterial: SetterMeterialMeta = {
     version: 'v0.1.1',

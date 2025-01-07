@@ -4,7 +4,6 @@ import Meterial from '../meterial';
 import { spcialHookFactory } from '../hook';
 import { HookMapHookInstance, HooksInstanceDriver } from '@type/hookInstance';
 import TreeNodeManager from '../nodeManager/TreeNodeManager';
-import { buildSetterInstance } from '../utils/buildSetter';
 
 /**
  * 引擎的流程中心
@@ -32,16 +31,7 @@ class Engine {
         });
         this.hooks.pluginInited.call(this);
     }
-    private initInnerHooks() {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const engin = this;
-        this.hooks.buildSetterInstance.tap({
-            priority: 'post',
-            handler(treeNode, config) {
-                return buildSetterInstance(engin, treeNode, config);
-            }
-        });
-    }
+    private initInnerHooks() {}
     async init() {
         // 调用options钩子，修改options
         await this.hooks.options.call(this.option);

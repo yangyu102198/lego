@@ -3,10 +3,10 @@ import ApplyerFactory from './ApplyerFactory';
 import { Applyer, SetterConfig } from '@type/setter';
 import Engin from '../engine';
 import TreeNode from '../nodeManager/TreeNode';
-import { buildSetterInstance } from '../utils/buildSetter';
+// import { buildSetterInstance } from '../utils/buildSetter';
 
 export default class BaseSetter {
-    children: (BaseSetter | Partial<SetterConfig>)[] = [];
+    children: any[] = [];
     applyer: Applyer;
     view!: Component;
     private isInitChildren = false;
@@ -40,7 +40,7 @@ export default class BaseSetter {
             if ('render' in child) {
                 return child;
             } else {
-                return buildSetterInstance(this.engin, this.treeNode, child);
+                // return buildSetterInstance(this.engin, this.treeNode, child);
             }
         });
         this.isInitChildren = true;

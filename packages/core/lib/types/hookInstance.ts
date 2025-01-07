@@ -5,8 +5,6 @@ import type Engine from '../engine';
 import TreeNode from '../nodeManager/TreeNode';
 import { spcialHookFactory } from '../hook';
 import { MakeAsync } from './utils';
-import { SetterConfig } from './setter';
-import BaseSetter from '../setter/BaseSetter';
 
 // 插件的钩子的函数声明
 export interface HooksInstanceFunction {
@@ -30,11 +28,6 @@ export interface HooksInstanceFunction {
     rootNodeActived(node: TreeNode | null): void;
     treeNodeCreate(node: TreeNode): void;
     treeNodeDestory(node: TreeNode): void;
-    //构建setter实例
-    buildSetterInstance(
-        treeNode: TreeNode,
-        setterConfig: SetterConfig
-    ): BaseSetter;
 }
 // 异步钩子
 export type AsyncHooksInstance = 'options' | 'pluginInited' | 'enginFlowStart';
@@ -47,8 +40,7 @@ export type SyncHooksInstance =
     | 'selectedNode'
     | 'handlerSelectedNodes'
     | 'treeNodeCreate'
-    | 'treeNodeDestory'
-    | 'buildSetterInstance';
+    | 'treeNodeDestory';
 // 所有插件的钩子
 export type HooksInstance = AsyncHooksInstance | SyncHooksInstance;
 
@@ -63,8 +55,7 @@ export const HookMapHookInstance = {
     selectedNode: 'SyncHook',
     handlerSelectedNodes: 'SyncWaterHook',
     treeNodeCreate: 'SyncHook',
-    treeNodeDestory: 'SyncHook',
-    buildSetterInstance: 'SyncFirstRetHook'
+    treeNodeDestory: 'SyncHook'
 } as const satisfies Partial<Record<HooksInstance, HookInstanceName>>;
 
 export type MakePluginHookFunction<T extends HooksInstance> =

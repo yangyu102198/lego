@@ -1,5 +1,5 @@
 import { type SetterMeterialMeta } from '@lego/core';
-import styleEditorSetter from './styleEditor.vue';
+import styleEditorSetter from './styleEditorWrap.vue';
 
 const styleEditorSetterMeterial: SetterMeterialMeta = {
     version: 'v0.1.1',
