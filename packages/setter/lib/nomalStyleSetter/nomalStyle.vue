@@ -12,11 +12,7 @@
 </template>
 <script lang="ts" setup>
 import setter from '@lego/vue-component/setter';
-import { Engin, TreeNode, SetterConfig } from '@lego/core';
+import { setterDefaultProps } from '@type/setterDefaultProps';
 
-const props = defineProps<{
-    engin: Engin;
-    treeNode: TreeNode;
-    setterConfig: SetterConfig;
-}>();
+const props = defineProps<setterDefaultProps>();
 </script>

@@ -1,7 +1,7 @@
 import Engin from '../engine';
 import TreeNode from '../nodeManager/TreeNode';
 import { SetterConfig, Applyer } from '@type/setter';
-import { SetterMeterialMeta } from '@type/meterialMeta';
+import { SetterMeterialMeta, SetterType } from '@type/meterialMeta';
 
 import ApplyerFactory from '../setter/ApplyerFactory';
 
@@ -22,7 +22,9 @@ export const getSetterComponentAndApplyer = (
             engin,
             setterConfig.setter!
         ) as SetterMeterialMeta;
-        isLayoutSetter = !!meterial.setterConfig?.layout;
+        isLayoutSetter = !!(
+            meterial.setterType && meterial.setterType === SetterType.Layout
+        );
         component = meterial.getMetrial();
     }
     if (!component) {

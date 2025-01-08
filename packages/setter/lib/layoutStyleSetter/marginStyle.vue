@@ -68,6 +68,7 @@
 </template>
 <script lang="ts" setup>
 import { Applyer } from '@lego/core';
+
 const props = defineProps<{
     applyer: Applyer;
 }>();

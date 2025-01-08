@@ -15,7 +15,7 @@ export type ApplerExtend = Partial<Pick<Applyer, 'getter' | 'setter'>>;
 export type ApplerParams = Pick<Applyer, 'engin' | 'prop' | 'treeNode'>;
 
 export interface SetterConfig {
-    config?: Record<string, any>;
+    config?: Record<string, any> | FnType;
     applyer?: Partial<Applyer> | FnType;
     prop?: string;
     setter?: string | Component;

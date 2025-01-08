@@ -28,42 +28,40 @@
                 />
             </div>
             <marginStyle :applyer="config.marginApplyer"></marginStyle>
+            <setter
+                :engin="props.engin"
+                :treeNode="props.treeNode"
+                :setterConfig="config.widthAndHeight"
+                key="width-height"
+            />
         </el-collapse-item>
     </el-collapse>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 import setter from '@lego/vue-component/setter';
-import {
-    Engin,
-    TreeNode,
-    SetterConfig,
-    Applyer,
-    ApplyerFactory
-} from '@lego/core';
+import { ApplyerFactory } from '@lego/core';
+import { ElCollapse, ElCollapseItem } from 'element-plus';
+import marginStyle from './marginStyle.vue';
+import { setterDefaultProps } from '@type/setterDefaultProps';
 import {
     createLayoutModeConfig,
     createFlexDirectionConfig,
     createJustifyContentConfig,
     createAlignItemsConfig,
+    createWidthAndHeight,
     createApplyer
 } from './createConfig';
-import { ElCollapse, ElCollapseItem } from 'element-plus';
-import marginStyle from './marginStyle.vue';
 import './style';
 
 const activeNames = ref('1');
-const props = defineProps<{
-    engin: Engin;
-    treeNode: TreeNode;
-    setterConfig: SetterConfig;
-    applyer: Applyer;
-}>();
+const props = defineProps<setterDefaultProps>();
 const config = {
     layout: createLayoutModeConfig(),
     flexDirection: createFlexDirectionConfig(),
     justifyContent: createJustifyContentConfig(),
     alignItems: createAlignItemsConfig(),
+    widthAndHeight: createWidthAndHeight(),
     marginApplyer: ApplyerFactory(
         {
             engin: props.engin,

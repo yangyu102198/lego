@@ -1,15 +1,12 @@
 <template>
-    <span :style="getStyle()" class="label">
-        {{ props.setterConfig.config.label }}
+    <span v-bind="getConfig(props, $attrs)" class="label">
+        {{ getConfig(props).label }}
     </span>
 </template>
 <script lang="ts" setup>
-const props = defineProps<{
-    setterConfig: Record<string, any>;
-}>();
-const getStyle = () => {
-    return props.setterConfig.config?.style || '';
-};
+import { getConfig } from '@utils/index';
+import { setterDefaultProps } from '@type/setterDefaultProps';
+const props = defineProps<setterDefaultProps>();
 </script>
 <style lang="scss" scoped>
 .label {

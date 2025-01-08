@@ -1,4 +1,4 @@
-import { type SetterMeterialMeta } from '@lego/core';
+import { type SetterMeterialMeta, SetterType } from '@lego/core';
 import row from './row.vue';
 
 const layoutRowSetterMeterial: SetterMeterialMeta = {
@@ -7,9 +7,7 @@ const layoutRowSetterMeterial: SetterMeterialMeta = {
     alias: 'row',
     name: 'layout-row',
     setterName: 'layout-row',
-    setterConfig: {
-        layout: true
-    },
+    setterType: SetterType.Layout,
     getMetrial() {
         return row;
     }

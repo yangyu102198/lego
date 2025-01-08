@@ -36,6 +36,12 @@ const activeName = ref('active-tab-0');
 const getCurrentActiveTreeNodeTab = () => {
     const node = currentActiveTreeNode.value;
     const tab = node.configApplier.getDefaultConfig('componentEditPanel');
+    if (typeof tab == 'function') {
+        return tab({
+            engin: props.engin,
+            treeNode: props.activeTreeNode
+        });
+    }
     return tab;
 };
 const currentActiveTreeNode = computed(() => props.activeTreeNode[0]);

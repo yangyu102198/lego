@@ -1,4 +1,5 @@
-import { type SetterMeterialMeta } from '@lego/core';
+import { type SetterMeterialMeta, SetterType } from '@lego/core';
+
 import label from './label.vue';
 
 const layoutLabelSetterMeterial: SetterMeterialMeta = {
@@ -7,9 +8,7 @@ const layoutLabelSetterMeterial: SetterMeterialMeta = {
     alias: 'label',
     name: 'layout-label',
     setterName: 'layout-label',
-    setterConfig: {
-        layout: true
-    },
+    setterType: SetterType.Layout,
     getMetrial() {
         return label;
     }

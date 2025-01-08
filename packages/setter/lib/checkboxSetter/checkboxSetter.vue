@@ -3,7 +3,7 @@
         <el-radio-group
             @update:modelValue="value => props.applyer.setter(value)"
             :modelValue="props.applyer.getter()"
-            :size="props.setterConfig.config?.size || 'small'"
+            :size="getConfig(props).size || 'small'"
         >
             <el-radio-button
                 :value="item.value"
@@ -22,20 +22,18 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { Applyer } from '@lego/core';
 import { icon } from '@lego/vue-component';
+import { getConfig } from '@utils/index';
+import { setterDefaultProps } from '@type/setterDefaultProps';
 import { ElRadioGroup, ElRadioButton } from 'element-plus';
 import './style';
 
-const props = defineProps<{
-    setterConfig: Record<string, any>;
-    applyer: Applyer;
-}>();
+const props = defineProps<setterDefaultProps>();
 const isIcon = item => {
     return !(item.type && item.type != 'icon');
 };
 const getIconSize = () => {
-    const { config } = props.setterConfig || {};
+    const config = getConfig(props);
     switch (config.size) {
         case 'large':
             return 24;
@@ -45,6 +43,6 @@ const getIconSize = () => {
     return 20;
 };
 const getList = () => {
-    return props.setterConfig.config?.list || [];
+    return getConfig(props).list || [];
 };
 </script>

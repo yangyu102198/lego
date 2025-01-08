@@ -74,13 +74,15 @@ export interface ComponentMeterialMeta<
     componentLayoutType?: LayoutName;
 }
 
+export enum SetterType {
+    Layout = 'layout',
+    Setter = 'setter'
+}
 // setter资源配置
 export interface SetterMeterialMeta extends MeterialMeta {
     type: 'setter';
     setterName: string;
-    setterConfig?: {
-        layout: boolean;
-    };
+    setterType?: SetterType;
 }
 
 // 保存的节点树资源配置

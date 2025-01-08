@@ -35,13 +35,13 @@ const {
 );
 const getProps = () => {
     const propsObj: Record<string, any> = {
-        setterConfig: props.setterConfig
+        setterConfig: props.setterConfig,
+        engin: props.engin,
+        treeNode: props.treeNode
     };
     // 当不是布局setter的话，传入参数
     if (!isLayoutSetter) {
         propsObj.applyer = applyer;
-        propsObj.engin = props.engin;
-        propsObj.treeNode = props.treeNode;
     }
     return propsObj;
 };

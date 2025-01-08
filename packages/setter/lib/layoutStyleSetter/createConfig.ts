@@ -1,3 +1,5 @@
+import { getDomElementPosition } from '@utils/index';
+import { Applyer } from '@lego/core';
 export const createApplyer =
     (defaultStyleName = '') =>
     instance => {
@@ -18,15 +20,35 @@ export const createApplyer =
                     styleName = null;
                 }
                 let allStyle = oldGetter() || '';
+                const isRemove = value == '';
                 styleName = styleName || defaultStyleName;
                 const match = regCreater(styleName).exec(allStyle);
-                if (match) {
-                    const newValue = match[0].replace(match[1], value);
-                    allStyle = allStyle.replace(match[0], newValue);
+                if (isRemove) {
+                    if (match) {
+                        allStyle = allStyle.replace(match[0], '');
+                    }
                 } else {
-                    allStyle += `   \n${styleName}:${value};`;
+                    if (match) {
+                        const newValue = match[0].replace(match[1], value);
+                        allStyle = allStyle.replace(match[0], newValue);
+                    } else {
+                        allStyle += `   \n${styleName}:${value};`;
+                    }
                 }
                 oldSetter(allStyle);
+            }
+        };
+    };
+
+export const createWidthOrHeightApplyer =
+    (widthOrHeight: string) => (instance: Applyer) => {
+        const oldApplyer = createApplyer(widthOrHeight)(instance);
+        return {
+            getter() {
+                return parseInt(oldApplyer.getter());
+            },
+            setter(value) {
+                oldApplyer.setter(value == '' ? value : value + 'px');
             }
         };
     };
@@ -269,6 +291,80 @@ export const createAlignItemsConfig = (params = {}) => {
                                     }
                                 ]
                             }
+                        }
+                    ]
+                }
+            ]
+        },
+        params
+    );
+};
+
+export const createWidthAndHeightInputConfig =
+    (widthOrHeight: string) => (_, treeNode) => {
+        return {
+            type: 'number',
+            placeholder: treeNode.component?.$el
+                ? parseInt(
+                      getDomElementPosition(treeNode.component.$el)[
+                          widthOrHeight
+                      ] + ''
+                  )
+                : '0',
+
+            slots: {
+                suffix: () => 'px'
+            }
+        };
+    };
+
+export const createWidthAndHeight = (params = {}) => {
+    return Object.assign(
+        {
+            setter: 'layout-row',
+            config: {},
+            children: [
+                {
+                    setter: 'layout-col',
+                    config: { span: 3 },
+                    children: [
+                        {
+                            setter: 'layout-label',
+                            config: { label: '宽度' }
+                        }
+                    ]
+                },
+                {
+                    setter: 'layout-col',
+                    config: { span: 9 },
+                    children: [
+                        {
+                            applyer: createWidthOrHeightApplyer('width'),
+                            setter: 'input',
+                            prop: 'style',
+                            config: createWidthAndHeightInputConfig('width')
+                        }
+                    ]
+                },
+                {
+                    setter: 'layout-col',
+                    config: { span: 3 },
+                    children: [
+                        {
+                            setter: 'layout-label',
+                            config: { label: '高度' }
+                        }
+                    ]
+                },
+                {
+                    setter: 'layout-col',
+                    config: { span: 9 },
+                    children: [
+                        {
+                            applyer: createWidthOrHeightApplyer('height'),
+                            setter: 'input',
+                            prop: 'style',
+                            config: createWidthAndHeightInputConfig('height')
                         }
                     ]
                 }

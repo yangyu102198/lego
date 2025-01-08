@@ -1,4 +1,4 @@
-import { type SetterMeterialMeta } from '@lego/core';
+import { type SetterMeterialMeta, SetterType } from '@lego/core';
 import col from './col.vue';
 
 const layoutColSetterMeterial: SetterMeterialMeta = {
@@ -7,9 +7,7 @@ const layoutColSetterMeterial: SetterMeterialMeta = {
     alias: 'col',
     name: 'layout-col',
     setterName: 'layout-col',
-    setterConfig: {
-        layout: true
-    },
+    setterType: SetterType.Layout,
     getMetrial() {
         return col;
     }
