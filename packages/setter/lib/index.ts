@@ -1,16 +1,8 @@
-import styleEditorSetterMeterial from './styleEditorSetter';
-import nomalStyleSetterMeterial from './nomalStyleSetter';
-import checkboxSetterMeterial from './checkboxSetter';
-import layoutStyleSetterMeterial from './layoutStyleSetter';
-import inputSetterMeterial from './inputSetter';
-
+//基础的setter
+import baseSetter from './baseSetter';
+//布局的setter
 import layout from './layout';
+//样式的setter
+import style from './styleSetter';
 
-export default [
-    styleEditorSetterMeterial,
-    nomalStyleSetterMeterial,
-    checkboxSetterMeterial,
-    layoutStyleSetterMeterial,
-    inputSetterMeterial,
-    ...layout
-];
+export default [...style, ...baseSetter, ...layout];

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="active-editor-panel">
         <el-tabs v-model="activeName">
             <el-tab-pane
                 :label="item.tabName"
@@ -10,6 +10,7 @@
                 <div
                     v-for="(setterConfig, setterIndex) in item.setters"
                     v-bind:key="`active-tab-${index}__${setterIndex}_${currentActiveTreeNode.id}`"
+                    class="active-editor-panel__setter"
                 >
                     <setter
                         :engin="props.engin"
@@ -46,3 +47,13 @@ const getCurrentActiveTreeNodeTab = () => {
 };
 const currentActiveTreeNode = computed(() => props.activeTreeNode[0]);
 </script>
+<style lang="scss" scoped>
+.active-editor-panel__setter {
+    height: calc(100vh - 174px);
+    overflow: scroll;
+}
+.active-editor-panel .el-tabs__content {
+    padding-left: 32px;
+    padding-right: 32px;
+}
+</style>

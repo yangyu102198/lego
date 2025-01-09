@@ -68,19 +68,16 @@
 </template>
 <script lang="ts" setup>
 import { Applyer } from '@lego/core';
-
 const props = defineProps<{
     applyer: Applyer;
 }>();
 const { applyer } = props;
 const getValue = style => {
     const value = props.applyer.getter(style);
-    const match = /^\d+/.exec(value);
-    return (match && +match[0]) || 0;
+    return value || 0;
 };
 const setValue = (style, event) => {
-    const value = `${+event.target?.value || 0}px`;
-    applyer.setter(style, value);
+    applyer.setter(style, event.target?.value || 0);
 };
 </script>
 <style lang="scss" scoped>

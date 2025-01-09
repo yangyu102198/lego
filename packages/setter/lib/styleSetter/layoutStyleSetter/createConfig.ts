@@ -1,54 +1,21 @@
 import { getDomElementPosition } from '@utils/index';
-import { Applyer } from '@lego/core';
-export const createApplyer =
-    (defaultStyleName = '') =>
-    instance => {
-        const oldGetter = instance.getter.bind(instance);
-        const oldSetter = instance.setter.bind(instance);
-        const regCreater = str => new RegExp(`${str}:([^;\n]*)[;\n]`);
-        return {
-            getter(styleName?) {
-                const allStyle = oldGetter();
-                const match = regCreater(styleName || defaultStyleName).exec(
-                    allStyle
-                );
-                return (match && match[1].trim()) || '';
-            },
-            setter(styleName, value?) {
-                if (value == null) {
-                    value = styleName;
-                    styleName = null;
-                }
-                let allStyle = oldGetter() || '';
-                const isRemove = value == '';
-                styleName = styleName || defaultStyleName;
-                const match = regCreater(styleName).exec(allStyle);
-                if (isRemove) {
-                    if (match) {
-                        allStyle = allStyle.replace(match[0], '');
-                    }
-                } else {
-                    if (match) {
-                        const newValue = match[0].replace(match[1], value);
-                        allStyle = allStyle.replace(match[0], newValue);
-                    } else {
-                        allStyle += `   \n${styleName}:${value};`;
-                    }
-                }
-                oldSetter(allStyle);
-            }
-        };
-    };
+import { createApplyer, createSizeApplyer } from '../createApplyer';
+import { Engin, TreeNode, ApplyerFactory } from '@lego/core';
 
-export const createWidthOrHeightApplyer =
-    (widthOrHeight: string) => (instance: Applyer) => {
-        const oldApplyer = createApplyer(widthOrHeight)(instance);
+export const createWidthOrHeightInputConfig =
+    (widthOrHeight: string) => (_, treeNode) => {
         return {
-            getter() {
-                return parseInt(oldApplyer.getter());
-            },
-            setter(value) {
-                oldApplyer.setter(value == '' ? value : value + 'px');
+            type: 'number',
+            placeholder: treeNode.component?.$el
+                ? parseInt(
+                      getDomElementPosition(treeNode.component.$el)[
+                          widthOrHeight
+                      ] + ''
+                  )
+                : '0',
+
+            slots: {
+                suffix: () => 'px'
             }
         };
     };
@@ -61,7 +28,7 @@ export const createLayoutModeConfig = (params = {}) => {
             children: [
                 {
                     setter: 'layout-col',
-                    config: { span: 6 },
+                    config: { span: 5 },
                     children: [
                         {
                             setter: 'layout-label',
@@ -123,7 +90,7 @@ export const createFlexDirectionConfig = (params = {}) => {
             children: [
                 {
                     setter: 'layout-col',
-                    config: { span: 6 },
+                    config: { span: 5 },
                     children: [
                         {
                             setter: 'layout-label',
@@ -181,7 +148,7 @@ export const createJustifyContentConfig = (params = {}) => {
                 {
                     setter: 'layout-col',
                     config: {
-                        span: 6
+                        span: 5
                     },
                     children: [
                         {
@@ -246,7 +213,7 @@ export const createAlignItemsConfig = (params = {}) => {
             children: [
                 {
                     setter: 'layout-col',
-                    config: { span: 6 },
+                    config: { span: 5 },
                     children: [
                         {
                             setter: 'layout-label',
@@ -300,25 +267,7 @@ export const createAlignItemsConfig = (params = {}) => {
     );
 };
 
-export const createWidthAndHeightInputConfig =
-    (widthOrHeight: string) => (_, treeNode) => {
-        return {
-            type: 'number',
-            placeholder: treeNode.component?.$el
-                ? parseInt(
-                      getDomElementPosition(treeNode.component.$el)[
-                          widthOrHeight
-                      ] + ''
-                  )
-                : '0',
-
-            slots: {
-                suffix: () => 'px'
-            }
-        };
-    };
-
-export const createWidthAndHeight = (params = {}) => {
+export const createWidthAndHeightConfig = (params = {}) => {
     return Object.assign(
         {
             setter: 'layout-row',
@@ -326,7 +275,7 @@ export const createWidthAndHeight = (params = {}) => {
             children: [
                 {
                     setter: 'layout-col',
-                    config: { span: 3 },
+                    config: { span: 5 },
                     children: [
                         {
                             setter: 'layout-label',
@@ -336,13 +285,13 @@ export const createWidthAndHeight = (params = {}) => {
                 },
                 {
                     setter: 'layout-col',
-                    config: { span: 9 },
+                    config: { span: 7, style: 'margin-right:10px' },
                     children: [
                         {
-                            applyer: createWidthOrHeightApplyer('width'),
+                            applyer: createSizeApplyer('width'),
                             setter: 'input',
                             prop: 'style',
-                            config: createWidthAndHeightInputConfig('width')
+                            config: createWidthOrHeightInputConfig('width')
                         }
                     ]
                 },
@@ -358,18 +307,29 @@ export const createWidthAndHeight = (params = {}) => {
                 },
                 {
                     setter: 'layout-col',
-                    config: { span: 9 },
+                    config: { span: 7 },
                     children: [
                         {
-                            applyer: createWidthOrHeightApplyer('height'),
+                            applyer: createSizeApplyer('height'),
                             setter: 'input',
                             prop: 'style',
-                            config: createWidthAndHeightInputConfig('height')
+                            config: createWidthOrHeightInputConfig('height')
                         }
                     ]
                 }
             ]
         },
         params
+    );
+};
+
+export const createMarginApplyer = (engin: Engin, treeNode: TreeNode) => {
+    return ApplyerFactory(
+        {
+            engin: engin,
+            treeNode: treeNode,
+            prop: 'style'
+        },
+        createSizeApplyer()
     );
 };

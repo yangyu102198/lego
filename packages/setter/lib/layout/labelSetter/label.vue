@@ -1,16 +1,17 @@
 <template>
-    <span v-bind="getConfig(props, $attrs)" class="label">
-        {{ getConfig(props).label }}
+    <span v-bind="config" class="label">
+        {{ config.label }}
     </span>
 </template>
 <script lang="ts" setup>
-import { getConfig } from '@utils/index';
 import { setterDefaultProps } from '@type/setterDefaultProps';
+import useConfigHook from '@/component/useConfigHook';
 const props = defineProps<setterDefaultProps>();
+const config = useConfigHook(props);
 </script>
 <style lang="scss" scoped>
 .label {
-    color: rgb(0 0 0 / 60%);
+    color: #666;
     font-size: 12px;
     display: inline-flex;
     height: 100%;

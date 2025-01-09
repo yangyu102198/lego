@@ -6,6 +6,11 @@ export function getDomElementPosition(domElement: HTMLElement) {
     return postion;
 }
 
+export function getDomElementStyle(domElement: HTMLElement, name: string) {
+    const style = window.getComputedStyle(domElement);
+    return style[name];
+}
+
 type Props = {
     setterConfig: Record<string, any>;
     applyer: Applyer;

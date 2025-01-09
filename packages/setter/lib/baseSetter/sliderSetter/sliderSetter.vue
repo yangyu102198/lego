@@ -1,18 +1,16 @@
 <template>
-    <elInputWrap
+    <ElSlider
         @update:modelValue="value => props.applyer.setter(value)"
         :modelValue="props.applyer.getter()"
-        v-bind="getConfig(props, $attrs)"
-    ></elInputWrap>
+        v-bind="config"
+    ></ElSlider>
 </template>
 <script lang="ts" setup>
-import { ElInput } from 'element-plus';
-import { getConfig } from '@utils/index';
+import { ElSlider } from 'element-plus';
 import { setterDefaultProps } from '@type/setterDefaultProps';
-import slotWrap from '../component/slotWrap';
+import useConfigHook from '@/component/useConfigHook';
 import './style';
 
-const elInputWrap = slotWrap(ElInput);
-
 const props = defineProps<setterDefaultProps>();
+const config = useConfigHook(props);
 </script>

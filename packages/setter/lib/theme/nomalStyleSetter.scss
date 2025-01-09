@@ -1,0 +1,15 @@
+.setter-collapse-wrap {
+  .el-collapse-item {
+    border: 1px solid #DCDEE3;
+    button {
+      background-color: #F2F3F7 !important;
+      padding-left: 10px !important;
+    }
+    .el-collapse-item__wrap {
+      padding: 10px;
+    }
+    .el-collapse-item__content {
+      padding: 0px !important;
+    }
+  }
+}
