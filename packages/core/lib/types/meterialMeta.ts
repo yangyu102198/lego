@@ -72,6 +72,7 @@ export interface ComponentMeterialMeta<
     componentName: string;
     componentIcon?: string;
     componentLayoutType?: LayoutName;
+    onTreeNodeCreate?: (treeNode: any) => void;
 }
 
 export enum SetterType {

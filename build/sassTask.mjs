@@ -2,12 +2,9 @@ import gulpSass from 'gulp-sass';
 import chokidar from 'chokidar';
 import * as dartSass from 'sass';
 import fs from 'fs-extra';
-import { Helpers } from './Helpers.mjs';
 import { src, dest } from 'gulp';
 
-let helper = Helpers;
-
-export const createSassTask = isWatch =>
+export const createSassTask = taskRunner =>
     async function sassTask() {
         let rerun = false;
         let running = false;
@@ -17,7 +14,7 @@ export const createSassTask = isWatch =>
                 return;
             } else {
                 running = true;
-                await copyAndcompileSass();
+                await copyAndcompileSass(taskRunner);
                 running = false;
                 if (rerun) {
                     run();
@@ -26,17 +23,18 @@ export const createSassTask = isWatch =>
             }
         };
         await run();
-        if (isWatch) {
+        if (taskRunner.isWatch) {
             // 监听lib/theme目录
             chokidar
-                .watch(helper.resolve('./lib/theme'), {
+                .watch(taskRunner.helper.resolve('./lib/theme'), {
                     awaitWriteFinish: true
                 })
                 .on('all', run);
         }
     };
 
-export const copyAndcompileSass = async () => {
+export const copyAndcompileSass = async taskRunner => {
+    const helper = taskRunner.helper;
     const targetDir = helper.getOutDir();
     const sass = gulpSass(dartSass);
     //复制sass文件到dist/theme目录

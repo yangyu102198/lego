@@ -8,7 +8,6 @@ import json from '@rollup/plugin-json';
 import postcss from 'rollup-plugin-postcss';
 import vuePlugin from '@vitejs/plugin-vue';
 import { babel } from '@rollup/plugin-babel';
-import { Helpers } from './Helpers.mjs';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -45,14 +44,16 @@ const handleWatchRollupTask = async configList => {
 };
 
 export default class RollupTaskFactory {
-    constructor(helper) {
-        this.helpers = helper || Helpers;
+    constructor(taskRunner) {
+        this.helpers = taskRunner.helper;
+        this.taskRunner = taskRunner;
     }
-    createTask(isWatch = false, config) {
+    createTask(config) {
         config = config || this.getRollupDefaultConifg();
+        const { taskRunner } = this;
         return async function rollupTask() {
             try {
-                if (isWatch) {
+                if (taskRunner.isWatch) {
                     await handleWatchRollupTask(config);
                 } else {
                     await handleNormalRollupTask(config);

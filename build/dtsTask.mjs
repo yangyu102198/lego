@@ -1,8 +1,8 @@
 import { spawn } from 'child_process';
 
-export const createDtsTask = isWatch =>
+export const createDtsTask = taskRunner =>
     async function dtsTask() {
-        await taskDts(isWatch);
+        await taskDts(taskRunner.isWatch);
     };
 
 const taskDts = isWatch => {

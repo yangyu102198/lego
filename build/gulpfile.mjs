@@ -1,32 +1,39 @@
 import { parallel, series } from 'gulp';
-import fs from 'fs-extra';
 import { createSassTask } from './sassTask.mjs';
 import { Helpers } from './Helpers.mjs';
 import RollupTaskFactory from './RollupTaskFactory.mjs';
 import { createDtsTask } from './dtsTask.mjs';
-let helper = Helpers;
+import { clearOutDirTask } from './nomalTask.mjs';
 
-const clearOutDirTask = async () => {
-    const targetDir = helper.getOutDir();
-    await Promise.all([fs.emptyDir(targetDir)]);
-};
-
-const tasks = async isWatch => {
+const compositeTasks = taskRunner => async () => {
     // 创建rollup任务
-    const rollupTask = new RollupTaskFactory(helper);
+    const rollupTask = new RollupTaskFactory(taskRunner);
     await series(
-        clearOutDirTask,
+        clearOutDirTask(taskRunner),
         parallel(
-            createSassTask(isWatch),
-            rollupTask.createTask(isWatch),
-            createDtsTask(isWatch)
+            createSassTask(taskRunner),
+            rollupTask.createTask(),
+            createDtsTask(taskRunner)
         )
     )();
 };
 
-const setHelper = Helpers => {
-    helper = Helpers;
-};
-export const compile = () => tasks(false);
-export const watchCompile = () => tasks(true);
-export { clearOutDirTask, createSassTask, setHelper };
+class TaskRunner {
+    static parallel = parallel;
+    static series = series;
+    constructor() {
+        this.helper = Helpers;
+        this.isWatch = false;
+    }
+
+    runTask(task, isWatch = false) {
+        this.isWatch = isWatch;
+        return task(this)();
+    }
+    watch() {
+        this.isWatch = true;
+        return this;
+    }
+}
+
+export { TaskRunner, compositeTasks, clearOutDirTask, Helpers };

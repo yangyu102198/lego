@@ -103,3 +103,25 @@ export const getNodeLocked = (node: TreeNode) => {
     });
     return ret;
 };
+
+export const copy = data => {
+    const iteratorCopy = value => {
+        let ret: any;
+        if (!value) {
+            return value;
+        }
+        if (Array.isArray(value)) {
+            ret = [];
+        } else if (typeof value == 'object') {
+            ret = {};
+        } else {
+            return value;
+        }
+
+        Object.keys(value).forEach(key => {
+            ret[key] = iteratorCopy(value[key]);
+        });
+        return ret;
+    };
+    return iteratorCopy(data);
+};

@@ -4,11 +4,8 @@
         :is="props.treeNode.configApplier.getCurrentConfig('componentName')"
         :engin="props.engin"
         :treeNode="props.treeNode"
-        :style="
-            props.treeNode.configApplier.getCurrentConfig(
-                'componentConfig.style'
-            ) || ''
-        "
+        v-bind="getProps()"
+        :style="getStyle()"
     >
         <childComponent
             v-if="treeNode.childNodes.length"
@@ -24,4 +21,18 @@ const props = defineProps<{
     treeNode: TreeNode;
     engin: Engin;
 }>();
+const getStyle = () => {
+    return (
+        props.treeNode.configApplier.getCurrentConfig(
+            'componentConfig.style'
+        ) || ''
+    );
+};
+const getProps = () => {
+    return (
+        props.treeNode.configApplier.getCurrentConfig(
+            'componentConfig.props'
+        ) || {}
+    );
+};
 </script>

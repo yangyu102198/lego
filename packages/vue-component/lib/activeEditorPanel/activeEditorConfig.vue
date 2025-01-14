@@ -5,12 +5,12 @@
                 :label="item.tabName"
                 :name="`active-tab-${index}`"
                 v-bind:key="`active-tab-${index}`"
+                class="active-editor-panel__setter"
                 v-for="(item, index) in getCurrentActiveTreeNodeTab()"
             >
                 <div
                     v-for="(setterConfig, setterIndex) in item.setters"
                     v-bind:key="`active-tab-${index}__${setterIndex}_${currentActiveTreeNode.id}`"
-                    class="active-editor-panel__setter"
                 >
                     <setter
                         :engin="props.engin"

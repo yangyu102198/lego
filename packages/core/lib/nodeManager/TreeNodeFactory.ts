@@ -44,16 +44,20 @@ class TreeNodeFactory {
         }
 
         // 获取组件资源的默认数据
-        const componentMeterialMeta = this.meterial.getMeterialByType(
+        const meterialMeta = this.meterial.getMeterialByType(
             'component',
             nameOrData.componentName
         ) as any as TreeNodeMetaBase;
+        const componentMeterialMeta = meterialMeta[0];
         const configApplier = new ConfigApplier(
-            componentMeterialMeta[0],
+            componentMeterialMeta,
             nameOrData
         );
         configApplier.addPropertySetWay(createTreeNodePropertySetWay);
         const treeNode = new TreeNode(configApplier, parentNode);
+        if (componentMeterialMeta.onTreeNodeCreate) {
+            componentMeterialMeta.onTreeNodeCreate(treeNode);
+        }
         return treeNode;
     }
     // copy树节点以及子节点

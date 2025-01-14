@@ -1,5 +1,5 @@
 import { Engin, type Plugin, ComponentMeterialMeta } from '@lego/core';
-
+import { copy } from '../utils';
 /**
  * 组件初始化插件，
  * 可以用于vue组件的注册，缓存等工作
@@ -37,6 +37,44 @@ export const componentMeterialHandler = (fn: Fn): Plugin => {
                             );
                         }
                     });
+                }
+            });
+            // 同步默认属性
+            engin.hooks.treeNodeCreate.tap({
+                priority: 'post',
+                handler: node => {
+                    const applier = node.configApplier;
+                    const defaultProps: Record<string, any> =
+                        applier.getDefaultConfig('componentConfig.props');
+                    const synDefaultConfigTOCurrentConfig = () => {
+                        const currentProps =
+                            applier.getCurrentConfig('componentConfig.props') ||
+                            {};
+                        applier.setCurrentConfig(
+                            'componentConfig.props',
+                            currentProps
+                        );
+                        if (defaultProps) {
+                            Object.keys(defaultProps).forEach(key => {
+                                const propDefine = defaultProps[key];
+
+                                if (typeof propDefine == 'object') {
+                                    if (propDefine.init) {
+                                        propDefine.init(node);
+                                    }
+                                    if (
+                                        'default' in propDefine &&
+                                        !(key in currentProps)
+                                    ) {
+                                        currentProps[key] = copy(
+                                            propDefine.default
+                                        );
+                                    }
+                                }
+                            });
+                        }
+                    };
+                    synDefaultConfigTOCurrentConfig();
                 }
             });
         }

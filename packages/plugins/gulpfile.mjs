@@ -1,7 +1,6 @@
-import { series } from 'gulp';
 import dts from 'rollup-plugin-dts';
 import RollupTaskFactory from '../../build/RollupTaskFactory.mjs';
-import { clearOutDirTask } from '../../build/gulpfile.mjs';
+import { clearOutDirTask, TaskRunner } from '../../build/gulpfile.mjs';
 
 class PluginRollupTaskFactory extends RollupTaskFactory {
     getRollupDefaultConifg() {
@@ -33,11 +32,16 @@ class PluginRollupTaskFactory extends RollupTaskFactory {
     }
 }
 
-const tasks = async isWatch => {
+const tasks = taskRunner => async () => {
     // 创建rollup任务
-    const rollupTask = new PluginRollupTaskFactory();
-    await series(clearOutDirTask, rollupTask.createTask(isWatch))();
+    const rollupTask = new PluginRollupTaskFactory(taskRunner);
+    await TaskRunner.series(
+        clearOutDirTask(taskRunner),
+        rollupTask.createTask()
+    )();
 };
 
-export const compile = () => tasks(false);
-export const watchCompile = () => tasks(true);
+const taskRunner = new TaskRunner();
+
+export const compile = () => taskRunner.runTask(tasks);
+export const watchCompile = () => taskRunner.runTask(tasks, true);

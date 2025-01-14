@@ -1,12 +1,15 @@
 <template>
-    <div class="test-container" style="display: inline-block">test</div>
+    <div class="test-container" style="display: inline-block">
+        <span v-if="props.mark">
+            <mark>{{ props.textContent }}</mark>
+        </span>
+
+        <span v-else>{{ props.textContent }}</span>
+    </div>
 </template>
 
 <script lang="ts" setup>
-import { Engin, TreeNode } from '@lego/core';
+import { getProps } from './props';
 
-defineProps<{
-    engin: Engin;
-    treeNode: TreeNode;
-}>();
+const props = defineProps(getProps());
 </script>
