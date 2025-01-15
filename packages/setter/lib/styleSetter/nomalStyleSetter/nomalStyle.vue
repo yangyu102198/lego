@@ -28,6 +28,5 @@ const props = defineProps<setterDefaultProps>();
 </script>
 <style lang="scss" scoped>
 .nomal-style-setter {
-    padding: 10px;
 }
 </style>

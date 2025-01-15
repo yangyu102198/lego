@@ -1,15 +1,43 @@
 <template>
     <div class="test-container" style="display: inline-block">
-        <span v-if="props.mark">
-            <mark>{{ props.textContent }}</mark>
+        <span>
+            <contentComp />
         </span>
-
-        <span v-else>{{ props.textContent }}</span>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { getProps } from './props';
-
+import { h } from 'vue';
 const props = defineProps(getProps());
+
+const tagLists = [
+    {
+        name: 'mark',
+        prop: 'mark'
+    },
+    {
+        name: 'del',
+        prop: 'del'
+    },
+    {
+        name: 'u',
+        prop: 'u'
+    },
+    {
+        name: 'strong',
+        prop: 'strong'
+    }
+];
+
+const contentComp = () => {
+    return tagLists.reduceRight((pre: any, tag) => {
+        const valid = props[tag.prop];
+        if (valid) {
+            return h(tag.name, [pre]);
+        } else {
+            return pre;
+        }
+    }, props.textContent);
+};
 </script>

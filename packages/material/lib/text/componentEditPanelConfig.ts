@@ -18,13 +18,16 @@ export default [
         setters: [
             createRowSetter([
                 createColLabel({ config: { label: '文本内容' } }),
-                createColNomalSetter({
-                    setter: 'input',
-                    prop: 'props.textContent',
-                    config: {
-                        type: 'textarea'
-                    }
-                })
+                createColNomalSetter(
+                    {
+                        setter: 'input',
+                        prop: 'props.textContent',
+                        config: {
+                            type: 'textarea'
+                        }
+                    },
+                    { config: { span: 18 } }
+                )
             ]),
 
             createRowSetter([
@@ -32,6 +35,27 @@ export default [
                 createColNomalSetter({
                     setter: 'switch',
                     prop: 'props.mark'
+                })
+            ]),
+            createRowSetter([
+                createColLabel({ config: { label: '删除线' } }),
+                createColNomalSetter({
+                    setter: 'switch',
+                    prop: 'props.del'
+                })
+            ]),
+            createRowSetter([
+                createColLabel({ config: { label: '下划线' } }),
+                createColNomalSetter({
+                    setter: 'switch',
+                    prop: 'props.u'
+                })
+            ]),
+            createRowSetter([
+                createColLabel({ config: { label: '是否加粗' } }),
+                createColNomalSetter({
+                    setter: 'switch',
+                    prop: 'props.strong'
                 })
             ])
         ]

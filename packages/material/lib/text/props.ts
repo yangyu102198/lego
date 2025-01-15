@@ -9,6 +9,18 @@ export const getProps = () => {
         mark: {
             type: Boolean,
             default: false
+        },
+        del: {
+            type: Boolean,
+            default: false
+        },
+        u: {
+            type: Boolean,
+            default: false
+        },
+        strong: {
+            type: Boolean,
+            default: false
         }
     };
 };

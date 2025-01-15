@@ -50,10 +50,16 @@ const currentActiveTreeNode = computed(() => props.activeTreeNode[0]);
 <style lang="scss" scoped>
 .active-editor-panel__setter {
     height: calc(100vh - 174px);
+    padding: 10px;
     overflow: scroll;
 }
 .active-editor-panel .el-tabs__content {
     padding-left: 32px;
     padding-right: 32px;
+}
+.active-editor-panel {
+    /deep/ #tab-active-tab-0 {
+        padding-left: 20px;
+    }
 }
 </style>
